@@ -82,7 +82,7 @@ extern ConVar cl_backspeed;
 extern ConVar cl_sidespeed;
 extern ConVar mp_tournament_readymode_countdown;
 
-#define TF_MAX_SPEED   (400 * 1.3)	// 400 is Scout max speed, and we allow up to 3% movement bonus.
+ConVar  tf_max_speed( "tf_max_speed", "520", FCVAR_REPLICATED, "Max movement speed players are allowed to move at");	// 400 is Scout max speed, and we allow up to 3% movement bonus.
 
 #define TF_WATERJUMP_FORWARD	30
 #define TF_WATERJUMP_UP			300
@@ -308,7 +308,7 @@ void CTFGameMovement::ProcessMovement( CBasePlayer *pBasePlayer, CMoveData *pMov
 	mv = pMove;
 
 	// The max speed is currently set to the scout - if this changes we need to change this!
-	mv->m_flMaxSpeed = TF_MAX_SPEED;
+	mv->m_flMaxSpeed = tf_max_speed.GetFloat();
 
 	// Handle charging demomens
 	ChargeMove();
