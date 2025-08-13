@@ -896,6 +896,7 @@ ConVar bf_mvmvs_max_bosses( "bf_mvmvs_max_bosses", "1", FCVAR_REPLICATED | FCVAR
 ConVar bf_mvmvs_max_giants( "bf_mvmvs_max_giants", "3", FCVAR_REPLICATED | FCVAR_NOTIFY, "Maximum number of human-controlled Giant Robots allowed on the Invader team" );
 ConVar bf_mvmvs_restrict_slots( "bf_mvmvs_restrict_slots", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "If enabled, in playstyle 1, restrict weapon slots to only those equipped for the robot template" );
 ConVar bf_mvmvs_enable_human_busters( "bf_mvmvs_enable_human_busters", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Enable human-controlled Sentry Busters in MvM Versus mode. When enabled, bot Sentry Busters are disabled" );
+ConVar bf_mvm_inspect_friends_only( "bf_mvm_inspect_friends_only", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "Inspect friend upgrades only or everyone");
 
 #ifdef GAME_DLL
 enum { kMVM_CurrencyPackMinSize = 1, };

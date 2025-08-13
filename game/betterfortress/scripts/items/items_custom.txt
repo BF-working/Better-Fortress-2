@@ -724,6 +724,21 @@
 				}
 			}
 		}
+		//Tux - Powerup canteen :)
+		"1011"
+		{
+			"prefab"	"powerup_bottle"
+			"item_class"	"tf_powerup_bottle"
+			"item_slot"	"action"
+			"attributes"
+			{
+				"kill eater score type"
+				{
+					"attribute_class"		"kill_eater_score_type"
+					"value"		"109"
+				}
+			}
+		}
 		//CUT - Mercenary Park Cap
 		"1191"
 		{

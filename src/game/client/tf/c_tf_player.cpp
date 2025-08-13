@@ -1305,8 +1305,7 @@ void C_TFRagdoll::OnDataChanged( DataUpdateType_t type )
 					EmitSound( "TFPlayer.Decapitated" );
 
 					bool bBlood = true;
-					if ( TFGameRules() && ( TFGameRules()->UseSillyGibs() || 
-											( TFGameRules()->IsMannVsMachineMode() && pPlayer && pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) ) )
+					if ( TFGameRules() && ( TFGameRules()->UseSillyGibs() || ( TFGameRules()->IsMannVsMachineMode() && pPlayer && pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) ) || pPlayer->IsRobot() )
 					{
 						bBlood = false;
 					}
