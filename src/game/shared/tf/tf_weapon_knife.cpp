@@ -21,10 +21,6 @@
 #include "ilagcompensationmanager.h"
 #endif
 extern ConVar friendlyfire;
-
-// Convar for debugging backstab hitboxes
-ConVar bf_show_backstab_hitboxes( "bf_show_backstab_hitboxes", "0", FCVAR_CHEAT | FCVAR_REPLICATED, "Show backstab detection visualization for developers. 0 = off, 1 = basic, 2 = detailed" );
-
 //=============================================================================
 //
 // Weapon Knife tables.
@@ -409,17 +405,7 @@ bool CTFKnife::CanPerformBackstabAgainstTarget( CTFPlayer *pTarget )
 	int iNoBackstab = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( pTarget, iNoBackstab, cannot_be_backstabbed );
 	if ( iNoBackstab )
-	{
-		// Debug backstab immunity
-		if ( bf_show_backstab_hitboxes.GetInt() > 1 )
-		{
-#ifdef GAME_DLL
-			NDebugOverlay::Text( pTarget->WorldSpaceCenter() + Vector(0, 0, 48), 
-				"BACKSTAB IMMUNE", true, 0.1f );
-#endif
-		}
 		return false;
-	}
 
 	// Can't backstab if attached to someone with grapple or if the victim is flying fast by grapple
 	if ( TFGameRules() && TFGameRules()->IsPowerupMode() )
@@ -487,49 +473,12 @@ bool CTFKnife::IsBehindAndFacingTarget( CTFPlayer *pTarget )
 	float flPosVsOwnerViewDot = DotProduct( vecToTarget, vecOwnerForward );		// Facing?
 	float flViewAnglesDot = DotProduct( vecTargetForward, vecOwnerForward );	// Facestab?
 
-	// Backstab hitbox debugging visualization
-	// Changed from 180° (0.0f) to 140° (0.342f) - more restrictive backstab angle
-	bool bCanBackstab = ( flPosVsTargetViewDot > 0.342f && flPosVsOwnerViewDot > 0.5 && flViewAnglesDot > -0.3f );
-	int debugLevel = bf_show_backstab_hitboxes.GetInt();
-	
-	if ( debugLevel > 0 )
-	{
-#ifdef GAME_DLL
-		// Show target's forward direction (green arrow)
-		NDebugOverlay::HorzArrow( pTarget->WorldSpaceCenter(), pTarget->WorldSpaceCenter() + 64.0f * vecTargetForward, 
-			8.0f, 0, 255, 0, 255, true, 0.1f );
-		
-		// Show spy's forward direction (blue arrow)
-		NDebugOverlay::HorzArrow( pOwner->WorldSpaceCenter(), pOwner->WorldSpaceCenter() + 64.0f * vecOwnerForward, 
-			8.0f, 0, 0, 255, 255, true, 0.1f );
-		
-		// Show direction from spy to target (yellow arrow)
-		NDebugOverlay::HorzArrow( pOwner->WorldSpaceCenter(), pTarget->WorldSpaceCenter(), 
-			6.0f, 255, 255, 0, 255, true, 0.1f );
-		
-		// Show backstab success/failure zone around target
-		int r = bCanBackstab ? 0 : 255;
-		int g = bCanBackstab ? 255 : 0;
-		int b = 0;
-		
-		// Draw a circle around the target showing the backstab zone
-		Vector targetPos = pTarget->WorldSpaceCenter();
-		QAngle targetAngles = pTarget->EyeAngles();
-		targetAngles.x = 0; // Only use yaw rotation for the circle
-		NDebugOverlay::Circle( targetPos, targetAngles, 48.0f, r, g, b, 128, true, 0.1f );
-		
-		if ( debugLevel > 1 )
-		{
-			// Detailed debug: Show dot product values and thresholds
-			NDebugOverlay::Text( targetPos + Vector(0, 0, 32), 
-				UTIL_VarArgs("Behind: %.2f (>0.342)\nFacing: %.2f (>0.5)\nAngle: %.2f (>-0.3)\nResult: %s", 
-				flPosVsTargetViewDot, flPosVsOwnerViewDot, flViewAnglesDot, bCanBackstab ? "BACKSTAB" : "NO BACKSTAB"), 
-				true, 0.1f );
-		}
-#endif
-	}
+	// Debug
+	// 	NDebugOverlay::HorzArrow( pTarget->WorldSpaceCenter(), pTarget->WorldSpaceCenter() + 50.0f * vecTargetForward, 5.0f, 0, 255, 0, 255, true, NDEBUG_PERSIST_TILL_NEXT_SERVER );
+	// 	NDebugOverlay::HorzArrow( pOwner->WorldSpaceCenter(), pOwner->WorldSpaceCenter() + 50.0f * vecOwnerForward, 5.0f, 0, 255, 0, 255, true, NDEBUG_PERSIST_TILL_NEXT_SERVER );
+	// 	DevMsg( "PosDot: %3.2f FacingDot: %3.2f AnglesDot: %3.2f\n", flPosVsTargetViewDot, flPosVsOwnerViewDot, flViewAnglesDot );
 
-	return bCanBackstab;
+	return ( flPosVsTargetViewDot > 0.f && flPosVsOwnerViewDot > 0.5 && flViewAnglesDot > -0.3f );
 }
 
 //-----------------------------------------------------------------------------
