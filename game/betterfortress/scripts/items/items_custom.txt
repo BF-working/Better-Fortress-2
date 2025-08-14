@@ -490,6 +490,18 @@
 			}
 		}
 	}
+	"item_sets"
+	{
+		"testing_sets"
+		{
+			"name"	"#TF_Set_Desert_Sniper"
+			"items"
+			{
+				"The Hell Beneath"		"1"
+				"The Holy Marlin"		"1"
+			}
+		}
+	}
 	"attributes"
 	{
 		//RESTORED ONES
@@ -655,6 +667,16 @@
 			"effect_type"			"unusual"
 			"stored_as_integer"		"1"
 			"can_affect_market_name"	"1"
+		}
+		"4013"
+		{
+			"name"	"airblast pushes teammates"
+			"attribute_class"	"airblast_pushes_teammates"
+			"description_string"	"#Attrib_AirblastYourTeam"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
 		}
 	}
 	"items"

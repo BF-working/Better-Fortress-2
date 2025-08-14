@@ -17118,7 +17118,7 @@ void CTFGameRules::SetUpVisionFilterKeyValues(void)
 {
 	m_pkvVisionFilterShadersMapWhitelist = new KeyValues("VisionFilterShadersMapWhitelist");
 	if (!m_bSupportsPyroland)
-		m_pkvVisionFilterShadersMapWhitelist->LoadFromFile(g_pFullFileSystem, "cfg/mtp.cfg", "MOD");
+		m_pkvVisionFilterShadersMapWhitelist->LoadFromFile(g_pFullFileSystem, "cfg/mtp.cfg", "GAME");
 
 	m_pkvVisionFilterTranslations = new KeyValues( "VisionFilterTranslations" );
 

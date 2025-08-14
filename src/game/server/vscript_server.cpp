@@ -226,7 +226,7 @@ void CScriptConvarAccessor::LevelInitPreEntity()
 	m_AllowedConVars.RemoveAll();
 
 	KeyValues *kv = new KeyValues( "vscript_convar_allowlist" );
-	bool bLoaded = kv->LoadFromFile( g_pFullFileSystem, VSCRIPT_CONVAR_ALLOWLIST_NAME, "MOD" );
+	bool bLoaded = kv->LoadFromFile( g_pFullFileSystem, VSCRIPT_CONVAR_ALLOWLIST_NAME, "GAME" );
 	if ( bLoaded )
 	{
 		for ( KeyValues *pCurItem = kv->GetFirstValue(); pCurItem; pCurItem = pCurItem->GetNextValue() )
