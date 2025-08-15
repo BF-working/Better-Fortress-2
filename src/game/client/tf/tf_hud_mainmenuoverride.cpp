@@ -2525,9 +2525,15 @@ void CHudMainMenuOverride::LoadSplashTexts()
 	KeyValues *pSplashTexts = new KeyValues( "SplashTexts" );
 	if ( pSplashTexts->LoadFromFile( g_pFullFileSystem, "scripts/better_splashes.txt", "GAME" ) )
 	{
-		// The file format is line-based, so we need to read it differently
+		for ( KeyValues *pCurItem = pSplashTexts->GetFirstValue(); pCurItem; pCurItem = pCurItem->GetNextValue() )
+		{
+			const char *pName = pCurItem->GetName();
+			m_vecSplashTexts.AddToTail( CUtlString( pName ) );
+		}
 		pSplashTexts->deleteThis();
 		
+		// the code below might be a tad bit over-engineered, keeping it around as it seems useful
+		/*
 		// Read the file as text
 		CUtlBuffer buffer;
 		if ( g_pFullFileSystem->ReadFile( "scripts/better_splashes.txt", "GAME", buffer ) )
@@ -2568,7 +2574,7 @@ void CHudMainMenuOverride::LoadSplashTexts()
 				}
 				pLine = strtok( NULL, "\n\r" );
 			}
-		}
+		}*/
 	}
 	else
 	{
