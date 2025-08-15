@@ -2542,12 +2542,24 @@ void CHudMainMenuOverride::LoadSplashTexts()
 				while ( *pLine == ' ' || *pLine == '\t' )
 					pLine++;
 				
-				if ( *pLine != '\0' && *pLine != '#' ) // Skip empty lines and comments
+				// Skip empty lines, comments, "SplashTexts" line, and curly brackets
+				if ( *pLine != '\0' && *pLine != '#' && 
+					 strcmp(pLine, "\"SplashTexts\"") != 0 && 
+					 strcmp(pLine, "{") != 0 && 
+					 strcmp(pLine, "}") != 0 )
 				{
 					// Remove trailing whitespace
 					char *pEnd = pLine + strlen(pLine) - 1;
 					while ( pEnd > pLine && (*pEnd == ' ' || *pEnd == '\t' || *pEnd == '\n' || *pEnd == '\r') )
 						*pEnd-- = '\0';
+						
+					// Check if line starts and ends with quotes, and remove them
+					if ( strlen(pLine) > 2 && pLine[0] == '\"' && pLine[strlen(pLine)-1] == '\"' )
+					{
+						// Remove quotes
+						pLine[strlen(pLine)-1] = '\0';
+						pLine++;
+					}
 						
 					if ( strlen(pLine) > 0 )
 					{
