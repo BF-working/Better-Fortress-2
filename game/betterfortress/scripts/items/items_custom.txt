@@ -674,6 +674,24 @@
 			"attribute_class"	"airblast_pushes_teammates"
 			"description_string"	"#Attrib_AirblastYourTeam"
 			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"4014"
+		{
+			"name"	"visuals sound override"
+			"attribute_class"	"visuals_sound_override"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"4015"
+		{
+			"name"	"projectile has gravity"
+			"attribute_class"	"projectile_has_gravity"
+			"description_format"	"value_is_additive"
 			"hidden"	"1"
 			"effect_type"	"positive"
 			"stored_as_integer"	"1"
@@ -727,12 +745,17 @@
 				"attack projectiles"
 				{
 					"attribute_class"  "attack_projectiles"
-					"value"							"2"
+					"value"							"1"
 				}
 				"spread penalty"
 				{
 					"attribute_class" 	"mult_spread_scale"
-					"value" "1.8"
+					"value" "1.5"
+				}
+				"no primary ammo from dispensers while active"
+				{
+					"attribute_class"	"no_primary_ammo_from_dispensers"	
+					"value"	"1"
 				}
 				"maxammo primary reduced"
 				{

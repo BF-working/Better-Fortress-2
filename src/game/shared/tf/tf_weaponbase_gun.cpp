@@ -538,10 +538,19 @@ CBaseEntity *CTFWeaponBaseGun::FireRocket( CTFPlayer *pPlayer, int iRocketType )
 
 	CTFProjectile_Rocket *pProjectile = CTFProjectile_Rocket::Create( this, trace.endpos, angForward, pPlayer, pPlayer );
 
+	//Nobody owns Gravity... unless you get hit by an apple.
+	float fGravitationalProjectiles = 0;
+	CALL_ATTRIB_HOOK_FLOAT( fGravitationalProjectiles, projectile_has_gravity );
+
 	if ( pProjectile )
 	{
 		pProjectile->SetCritical( IsCurrentAttackACrit() );
 		pProjectile->SetDamage( GetProjectileDamage() );
+		if ( fGravitationalProjectiles )
+		{
+			pProjectile->SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_CUSTOM );
+			pProjectile->SetGravity( fGravitationalProjectiles );
+		}
 	}
 
 	return pProjectile;

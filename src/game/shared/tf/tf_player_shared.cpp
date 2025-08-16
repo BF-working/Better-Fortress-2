@@ -5720,6 +5720,7 @@ void CTFPlayerShared::OnAddHalloweenKartCage( void )
 		m_pOuter->m_hHalloweenKartCage->FollowEntity( m_pOuter, true );
 	}
 #else
+	CTFPlayer::PrecacheKart();
 	AddCond( TF_COND_FREEZE_INPUT );
 #endif // CLIENT_DLL
 }
