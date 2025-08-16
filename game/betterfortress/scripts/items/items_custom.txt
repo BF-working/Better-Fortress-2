@@ -100,11 +100,6 @@
 					"attribute_class"	"robotrobotrobotrobot"
 					"value"		"1"
 				}		
-				"override footstep sound set"
-				{
-					"attribute_class" "override_footstep_sound_set"
-					"value" 		"10"
-				}
 			}
 		}
 		
