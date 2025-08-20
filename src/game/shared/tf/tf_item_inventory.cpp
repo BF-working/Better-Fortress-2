@@ -1668,7 +1668,7 @@ CEconItemView *CTFPlayerInventory::GetCacheServerItemInLoadout( int iClass, int 
 				CEconItemView* pItem = TFInventoryManager()->GetModItem(i);
 				if (pItem && pItem->GetItemDefIndex() == m_CachedServerLoadoutItems[iClass][iSlot])
 				{
-					//DevMsg( "Using cached mod item: %d\n", m_CachedServerLoadoutItems[iClass][iSlot] );
+					//DevMsg( "Using cached mod item: %lld\n", m_CachedServerLoadoutItems[iClass][iSlot] );
 					if (pItem && AreSlotsConsideredIdentical(pItem->GetStaticData()->GetEquipType(), pItem->GetStaticData()->GetLoadoutSlot(iClass), iSlot))
 						return pItem;
 				}
