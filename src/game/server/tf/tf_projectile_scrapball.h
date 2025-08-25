@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// TF Rocket Projectile
+// TF Scrapball Projectile
 //
 //=============================================================================
 #ifndef TF_PROJECTILE_SCRAPBALL_H
@@ -15,7 +15,7 @@
 
 //=============================================================================
 //
-// Generic rocket.
+// Generic Scrapball.
 //
 class CTFProjectile_ScrapBall : public CTFBaseRocket, public IScorer
 {
@@ -28,7 +28,10 @@ public:
 	static CTFProjectile_ScrapBall *Create( CBaseEntity *pLauncher, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );	
 	virtual void Spawn();
 	virtual void Precache();
+	
+	// OVERRIDES.
 	virtual void RocketTouch( CBaseEntity *pOther ) OVERRIDE;
+	virtual void Explode( trace_t *pTrace, CBaseEntity *pOther ) OVERRIDE;
 
 	// IScorer interface
 	virtual CBasePlayer *GetScorer( void );
@@ -38,16 +41,22 @@ public:
 
 	void	SetCritical( bool bCritical ) { m_bCritical = bCritical; }
 	bool	IsCritical() { return m_bCritical; }
+
+	virtual float	GetDamage()	{ return 30.0f; }
 	virtual int		GetDamageType();
 
 	virtual bool	IsDeflectable() { return true; }
 	virtual void	Deflected( CBaseEntity *pDeflectedBy, Vector &vecDir );
-	// TODO: ADD BMMH
-	virtual int		GetWeaponID( void ) const { return TF_WEAPON_BMMH; }
+
+	virtual int		GetWeaponID( void ) const { return TF_WEAPON_DISPENSER_GUN; }
+
+
+	//Scrapball Specific
+	virtual int	GiveMetal( CTFPlayer *pPlayer );
 
 private:
 	CBaseHandle m_Scorer;
 	CNetworkVar( bool,	m_bCritical );
 };
 
-#endif	//TF_PROJECTILE_ROCKET_H
+#endif	//TF_PROJECTILE_SCRAPBALL_H

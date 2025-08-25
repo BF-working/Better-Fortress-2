@@ -636,6 +636,9 @@ extern ConVar tf_vaccinator_uber_resist;
 extern ConVar tf_teleporter_fov_time;
 extern ConVar tf_teleporter_fov_start;
 
+//Instant Respawn
+extern ConVar bf_instantrespawn;
+
 #ifdef GAME_DLL
 extern ConVar mp_holiday_nogifts;
 extern ConVar tf_debug_damage;
@@ -18748,6 +18751,7 @@ convar_tags_t convars_to_check_for_tags[] =
 	{ "mp_fadetoblack", "fadetoblack", NULL },
 	{ "tf_weapon_criticals", "nocrits", NULL },
 	{ "mp_disable_respawn_times", "norespawntime", NULL },
+	{ "bf_instantrespawn", "instantrespawn", NULL },
 	{ "tf_gamemode_arena", "arena", NULL },
 	{ "tf_gamemode_cp", "cp", NULL },
 	{ "tf_gamemode_ctf", "ctf", NULL },
