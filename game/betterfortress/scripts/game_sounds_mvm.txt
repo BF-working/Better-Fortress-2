@@ -1903,3 +1903,67 @@
 
 	"wave"	"ui/chat_display_text.wav"
 }
+
+//--------------------------------------
+// Better Fortress Canteens
+//--------------------------------------
+"MVM.CanteenVO_Crit_Merasmus"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.8"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90dB"
+
+	"wave"			")items/canteens/merasmus_canteen_kritz.mp3"
+}
+"MVM.CanteenVO_Uber_Merasmus"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.8"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90dB"
+
+	"wave"			")items/canteens/merasmus_canteen_uber.mp3"
+}
+"MVM.CanteenVO_Recall_Merasmus"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.8"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90dB"
+
+	"wave"			")items/canteens/merasmus_canteen_return.mp3"
+}
+"MVM.CanteenVO_Build_Merasmus"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.8"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90dB"
+
+	"wave"			")items/canteens/merasmus_canteen_building.mp3"
+}
+"MVM.CanteenVO_Ammo_Merasmus"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.8"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90dB"
+
+	"wave"			")items/canteens/merasmus_canteen_ammo.mp3"
+}
+"MVM.CanteenVO_Stealth_Merasmus"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.8"
+	"pitch"			"PITCH_NORM"
+	"soundlevel"	"SNDLVL_90dB"
+
+	"rndwave"
+	{
+		"wave"			")vo/halloween_merasmus/sf12_hide_heal12.mp3"
+		"wave"			")vo/halloween_merasmus/sf12_hide_heal14.mp3"
+		"wave"			")vo/halloween_merasmus/sf12_hide_heal16.mp3"
+		"wave"			")vo/halloween_merasmus/sf12_hide_heal19.mp3"
+	}
+}

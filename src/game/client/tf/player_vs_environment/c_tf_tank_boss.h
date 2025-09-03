@@ -15,8 +15,13 @@ public:
 
 	virtual void GetGlowEffectColor( float *r, float *g, float *b );
 
+	string_t m_iszClassIcon;
+
 	// ITFMvMBossProgressUser
-	virtual const char* GetBossProgressImageName() const OVERRIDE { return "tank"; }
+	virtual const char* GetBossProgressImageName() const OVERRIDE;
+	//virtual const char* GetBossProgressImageName() const OVERRIDE { return MAKE_STRING( m_iszClassIcon ); }
+	string_t	GetClassIconName( void ) const	{ return MAKE_STRING( m_iszClassIcon ); }
+	void		SetClassIconName( string_t iszClassIcon )		{ m_iszClassIcon = iszClassIcon; }
 };
 
 #endif // C_TF_TANK_BOSS_H

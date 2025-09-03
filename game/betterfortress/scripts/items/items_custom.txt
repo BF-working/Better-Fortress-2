@@ -708,6 +708,16 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"1"
 		}
+		"4016"
+		{
+			"name"	"item can speak"
+			"attribute_class"	"item_can_speak"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"description_string"	"#Attrib_ItemCanTalk_Description"
+			"stored_as_integer"	"1"
+		}
 	}
 	"items"
 	{
@@ -2072,6 +2082,44 @@
 		}
 		//32018 | Demoman customizable shield
 		// WARPAINT ITEMS
+		//MVM Canteen - Merasmus
+		"32019"
+		{
+			"name"		"Misfortunate Canteen"
+			"prefab"		"no_craft powerup_bottle"
+			"moditem" 	"1"
+			"item_quality" 	"community"
+			"capabilities"
+			{
+				"can_craft_count"		"1"
+			}
+			"holiday_restriction"	"halloween_or_fullmoon"
+			"item_name"		"#TF_Canteen_Merasmus"
+			"item_description"		"#TF_Canteen_Merasmus_Desc"
+			"image_inventory"		"backpack/workshop/player/items/all_class/misfortune_canteen/misfortune_canteen"
+			"model_player_per_class"
+			{
+				"basename"		"models/workshop/player/items/all_class/misfortune_canteen/misfortune_canteen_%s.mdl"
+			}
+			"attributes"
+			{
+				"kill eater score type"
+				{
+					"attribute_class"		"kill_eater_score_type"
+					"value"		"109"
+				}
+				"item can speak"
+				{
+					"attribute_class"		"item_can_speak"
+					"value" 		"1"				
+				}
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"							"9"
+				}		
+			}
+		}
 		"34000" 
 		{
 			"name"		"Paintkit 800"
@@ -2177,6 +2225,7 @@
 			"6"			"#Attrib_UGCW_PDA_Mini"
 			"7"			"#Attrib_UGCW_BBeacon"
 			"8"			"#Attrib_UGCT_StreamSniper"
+			"9"			"#Attrib_UGCC_Canteen_Merasmus"
 		}
 	}
 	"client_loot_lists"

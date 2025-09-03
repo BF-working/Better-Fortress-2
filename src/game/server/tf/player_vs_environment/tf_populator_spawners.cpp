@@ -1376,6 +1376,7 @@ CTankSpawner::CTankSpawner( IPopulator *populator ) : IPopulationSpawner( popula
 	m_startingPathTrackNodeName = NULL;
 	m_onKilledOutput = NULL;
 	m_onBombDroppedOutput = NULL;
+	m_iszClassIcon = MAKE_STRING( "tank" );
 }
 
 
@@ -1385,6 +1386,7 @@ bool CTankSpawner::Parse( KeyValues *values )
 	for ( KeyValues *data = values->GetFirstSubKey(); data != NULL; data = data->GetNextKey() )
 	{
 		const char *name = data->GetName();
+		const char *value = data->GetString();
 
 		if ( Q_strlen( name ) <= 0 )
 		{
@@ -1402,6 +1404,10 @@ bool CTankSpawner::Parse( KeyValues *values )
 		else if ( !Q_stricmp( name, "Name" ) )
 		{
 			m_name = data->GetString();
+		}
+		else if ( !Q_stricmp( name, "ClassIcon" ) )
+		{
+			m_iszClassIcon = AllocPooledString( value );
 		}
 		else if ( !Q_stricmp( name, "Skin" ) )
 		{
@@ -1451,6 +1457,7 @@ bool CTankSpawner::Spawn( const Vector &here, EntityHandleVector_t *result )
 
 		tank->DefineOnKilledOutput( m_onKilledOutput );
 		tank->DefineOnBombDroppedOutput( m_onBombDroppedOutput );
+		tank->SetClassIconName( GetClassIcon() );
 
 		if ( result )
 		{

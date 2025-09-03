@@ -150,8 +150,8 @@ void CTFProjectile_ScrapBall::RocketTouch( CBaseEntity *pOther )
 		{
 			CBaseObject *pObj = objVector[i];
 
-			if (pObj->GetHealth() == pObj->GetMaxHealth())
-				return;
+			//if (pObj->GetHealth() == pObj->GetMaxHealth())
+				//return;
 
 			bool bRepairHit = false;
 			bool bUpgradeHit = false;
@@ -165,6 +165,7 @@ void CTFProjectile_ScrapBall::RocketTouch( CBaseEntity *pOther )
 		}
 		// Play an impact sound.
 		EmitSound( "Weapon_Arrow.ImpactFleshCrossbowHeal" );
+		//UTIL_Remove( this );
 	}
 }
 

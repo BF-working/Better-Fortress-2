@@ -195,7 +195,7 @@ class CTankSpawner : public IPopulationSpawner
 public:
 	CTankSpawner( IPopulator *populator );
 
-	virtual string_t GetClassIcon( int nSpawnNum = -1 ) { return MAKE_STRING( "tank" ); }
+	virtual string_t GetClassIcon( int nSpawnNum = -1 ) { return  m_iszClassIcon; }
 	virtual int GetHealth( int nSpawnNum = -1  ){ return m_health; }
 
 	virtual bool Parse( KeyValues *data );
@@ -211,6 +211,7 @@ public:
 
 	virtual bool HasEventChangeAttributes( const char* pszEventName ) const OVERRIDE { return false; }
 
+	string_t m_iszClassIcon;
 	int m_health;
 	float m_speed;
 	CUtlString m_name;

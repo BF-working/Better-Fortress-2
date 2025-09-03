@@ -7,11 +7,13 @@
 #include "cbase.h"
 #include "tf_item_powerup_bottle.h"
 #include "tf_gamerules.h"
+#include "SoundEmitterSystem/isoundemittersystembase.h"
 
 #ifdef GAME_DLL
 #include "tf_player.h"
 #include "tf_obj_sentrygun.h"
 #include "tf_weapon_medigun.h"
+#include "recipientfilter.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -485,12 +487,44 @@ bool CTFPowerupBottle::Use()
 
 		float flDuration = 0;
 		CALL_ATTRIB_HOOK_FLOAT( flDuration, powerup_duration );
-		
+	
 		// Add extra time?
 		CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
 		if ( pOwner )
 		{
 			CALL_ATTRIB_HOOK_INT_ON_OTHER( pOwner, flDuration, canteen_specialist );
+
+			int iVoiceType = 0;
+			CALL_ATTRIB_HOOK_INT( iVoiceType, item_can_speak );
+
+			if ( iVoiceType )
+			{
+				const char *pEffectType = NULL;
+				const char *pVoiceChar = NULL;
+				switch ( GetPowerupType() )
+				{
+				case POWERUP_BOTTLE_CRITBOOST: pEffectType = "Crit"; break;
+				case POWERUP_BOTTLE_UBERCHARGE: pEffectType = "Uber"; break;
+				case POWERUP_BOTTLE_RECALL: pEffectType = "Recall"; break;
+				case POWERUP_BOTTLE_REFILL_AMMO: pEffectType = "Ammo"; break;
+				case POWERUP_BOTTLE_BUILDINGS_INSTANT_UPGRADE: pEffectType = "Build"; break;
+				case POWERUP_BOTTLE_RADIUS_STEALTH: pEffectType = "Stealth"; break;
+				case POWERUP_BOTTLE_SEE_CASH_THROUGH_WALL: pEffectType = "Xray"; break;
+				}
+				//Add more announcers if the community makes more!
+				switch ( iVoiceType )
+				{
+					case 1: pVoiceChar = "Merasmus"; break;
+				}
+				//Play the sound
+				if ( pVoiceChar != NULL && pEffectType != NULL )
+				{ 
+					CFmtStr iszCanteenSound( "MVM.CanteenVO_%s_%s", pEffectType, pVoiceChar );
+					PrecacheScriptSound( iszCanteenSound );
+					CReliableBroadcastRecipientFilter filter;
+					EmitSound( filter, entindex(), iszCanteenSound );
+				}
+			}
 		}
 		IGameEvent *event = gameeventmanager->CreateEvent( "player_used_powerup_bottle" );
 		if ( event )
@@ -766,12 +800,20 @@ void CEquipMvMCanteenNotification::Accept()
 	static CSchemaItemDefHandle pItemDef_Canteen( "Power Up Canteen (MvM)" );
 	static CSchemaItemDefHandle pItemDef_DefaultCanteen( "Default Power Up Canteen (MvM)" );
 
+	//Better Fortress
+	static CSchemaItemDefHandle pItemDef_MerasmusCanteen( "Misfortunate Canteen" );
+	static CSchemaItemDefHandle pItemDef_TuxCanteen( "Tux" );
+
 	CEconItemView *pCanteen= NULL;
 
 	Assert( pItemDef_Robo );
 	Assert( pItemDef_KritzOrTreat );
 	Assert( pItemDef_Canteen );
 	Assert( pItemDef_DefaultCanteen );
+
+	//Better Fortress
+	Assert( pItemDef_MerasmusCanteen );
+	Assert( pItemDef_TuxCanteen );
 	
 	for ( int i = 0; i < pLocalInv->GetItemCount(); ++i )
 	{
@@ -782,6 +824,8 @@ void CEquipMvMCanteenNotification::Accept()
 			|| pItem->GetItemDefinition() == pItemDef_KritzOrTreat
 			|| pItem->GetItemDefinition() == pItemDef_Canteen
 			|| pItem->GetItemDefinition() == pItemDef_DefaultCanteen
+			|| pItem->GetItemDefinition() == pItemDef_MerasmusCanteen
+			|| pItem->GetItemDefinition() == pItemDef_TuxCanteen
 		) {
 			pCanteen = pItem;
 			break;

@@ -37,6 +37,10 @@ public:
 	void DeployBomb( void );
 	void TankBossThink( void );
 
+	//Boss bar
+	string_t m_iszClassIcon;
+	void		SetClassIconName( string_t iszClassIcon )		{ m_iszClassIcon = iszClassIcon; }
+
 	void SetStartingPathTrackNode( char *name );
 
 	void InputSetPath( inputdata_t &inputdata );
