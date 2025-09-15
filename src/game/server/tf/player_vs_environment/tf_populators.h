@@ -335,6 +335,7 @@ public:
 	string_t GetClassIconName( int nIndex ) const;
 	unsigned int GetClassFlags( int nIndex ) const;
 
+	bool HasTanks( void ) const;
 	int NumTanksSpawned( void ) const;
 	void IncrementTanksSpawned( void );
 
@@ -365,6 +366,7 @@ private:
 	bool m_isStarted;
 	bool m_bFiredInitWaveOutput;
 	int m_iEnemyCount;
+	bool m_bHasTanks;
 	int m_nTanksSpawned;
 	int m_nSentryBustersSpawned;
 	int m_nNumEngineersTeleportSpawned;
@@ -424,6 +426,12 @@ inline unsigned int CWave::GetClassFlags( int nIndex ) const
 {
 	return m_nWaveClassCounts[ nIndex ].iFlags;
 }
+
+inline bool CWave::HasTanks( void ) const
+{
+	return m_bHasTanks;
+}
+
 
 inline int CWave::NumTanksSpawned( void ) const
 {

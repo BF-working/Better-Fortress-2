@@ -31,6 +31,9 @@ public:
 	void SetMannVsMachineWaveCount( int nCount ) { m_nMannVsMachineWaveCount = nCount; }
 	int GetMannVsMachineWaveCount( void ) { return m_nMannVsMachineWaveCount; }
 
+	void SetMannVsMachineWaveHasTanks( bool bTanks ) { m_nMannVsMachineWaveHasTanks = bTanks; }
+	bool GetMannVsMachineWaveHasTanks( void ) { return m_nMannVsMachineWaveHasTanks.Get(); }
+
 	void SetMannVsMachineWaveEnemyCount( int nCount ) { m_nMannVsMachineWaveEnemyCount = nCount; }
 	int	 GetMannVsMachineWaveEnemyCount( void ) { return m_nMannVsMachineWaveEnemyCount.Get(); }
 
@@ -76,6 +79,7 @@ private:
 	CNetworkVar( int, m_nMannVsMachineMaxWaveCount );
 	CNetworkVar( int, m_nMannVsMachineWaveCount );
 	CNetworkVar( int, m_nMannVsMachineWaveEnemyCount );
+	CNetworkVar( bool, m_nMannVsMachineWaveHasTanks );
 
 	CNetworkVar( int, m_nMvMWorldMoney );
 

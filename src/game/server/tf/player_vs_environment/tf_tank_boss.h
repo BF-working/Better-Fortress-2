@@ -37,9 +37,8 @@ public:
 	void DeployBomb( void );
 	void TankBossThink( void );
 
-	//Boss bar
-	string_t m_iszClassIcon;
-	void		SetClassIconName( string_t iszClassIcon )		{ m_iszClassIcon = iszClassIcon; }
+	// Entity I/O - For Mappers
+	COutputEvent m_outputOnBombDeployed;
 
 	void SetStartingPathTrackNode( char *name );
 
@@ -60,6 +59,9 @@ public:
 	void InputAddCaptureDestroyPostfix( inputdata_t &inputdata );
 
 	void UpdatePingSound( void );
+
+	string_t	GetClassIconName( void ) const { return m_iszClassIcon.Get(); }
+	void		SetClassIconName( string_t iszClassIcon ) { m_iszClassIcon = iszClassIcon; }
 
 protected:
 	virtual void ModifyDamage( CTakeDamageInfo *info ) const;
@@ -120,6 +122,7 @@ private:
 	static float m_flLastTankAlert;
 
 	CHistoryVector< EntityHistory_t, CEntityHistoryLess, 12 > m_vecDamagers;
+	CNetworkVar( string_t, m_iszClassIcon );
 };
 
 

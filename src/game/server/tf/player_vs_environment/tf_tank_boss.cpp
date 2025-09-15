@@ -176,6 +176,7 @@ PRECACHE_REGISTER( tank_boss );
 
 IMPLEMENT_SERVERCLASS_ST( CTFTankBoss, DT_TFTankBoss)
 	//SendPropVector(SENDINFO(m_StartColor), 8, 0, 0, 1),
+	SendPropStringT( SENDINFO ( m_iszClassIcon ) )
 END_SEND_TABLE()
 
 
@@ -184,9 +185,12 @@ BEGIN_DATADESC( CTFTankBoss )
 	DEFINE_THINKFUNC( TankBossThink ),
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "DestroyIfAtCapturePoint", InputDestroyIfAtCapturePoint ),
 	DEFINE_INPUTFUNC( FIELD_STRING, "AddCaptureDestroyPostfix", InputAddCaptureDestroyPostfix ),
+
 	DEFINE_INPUTFUNC( FIELD_STRING, "SetPath", InputSetPath ),
 	DEFINE_INPUTFUNC( FIELD_BOOLEAN, "CanDeploy", InputCanDeploy ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "ForceDeploy", InputForceDeploy ),
+
+	DEFINE_OUTPUT( m_outputOnBombDeployed,	"OnBombDeployed" ),
 
 END_DATADESC()
 
@@ -529,7 +533,7 @@ void CTFTankBoss::UpdateOnRemove( void )
 
 	if ( TFObjectiveResource() )
 	{
-		TFObjectiveResource()->DecrementMannVsMachineWaveClassCount( MAKE_STRING( "tank" ), MVM_CLASS_FLAG_NORMAL | MVM_CLASS_FLAG_MINIBOSS );
+		TFObjectiveResource()->DecrementMannVsMachineWaveClassCount( GetClassIconName(), MVM_CLASS_FLAG_NORMAL | MVM_CLASS_FLAG_MINIBOSS);
 	}
 
 	BaseClass::UpdateOnRemove();
@@ -901,6 +905,7 @@ void CTFTankBoss::TankBossThink( void )
 	if ( m_isDroppingBomb && IsSequenceFinished() )
 	{
 		FirePopFileEvent( &m_onBombDroppedEventInfo );
+		m_outputOnBombDeployed.FireOutput( this, this );
 		m_isDroppingBomb = false;
 
 		TFGameRules()->BroadcastSound( 255, "Announcer.MVM_Tank_Planted" );

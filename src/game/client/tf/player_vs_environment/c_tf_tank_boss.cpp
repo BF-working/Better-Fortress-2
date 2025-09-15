@@ -28,10 +28,9 @@ void C_TFTankBoss::GetGlowEffectColor( float *r, float *g, float *b )
 //-----------------------------------------------------------------------------
 const char* C_TFTankBoss::GetBossProgressImageName() const
 {
-	if ( m_iszClassIcon )
+	if (m_iszClassIcon[0] == '\0')
 	{
-		return GetClassIconName();
+		return "tank";
 	}
-
-	return "tank";
+	return m_iszClassIcon;
 }

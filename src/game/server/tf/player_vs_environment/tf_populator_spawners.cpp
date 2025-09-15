@@ -1376,7 +1376,7 @@ CTankSpawner::CTankSpawner( IPopulator *populator ) : IPopulationSpawner( popula
 	m_startingPathTrackNodeName = NULL;
 	m_onKilledOutput = NULL;
 	m_onBombDroppedOutput = NULL;
-	m_iszClassIcon = MAKE_STRING( "tank" );
+	m_iszClassIcon = NULL_STRING;
 }
 
 
@@ -1386,7 +1386,6 @@ bool CTankSpawner::Parse( KeyValues *values )
 	for ( KeyValues *data = values->GetFirstSubKey(); data != NULL; data = data->GetNextKey() )
 	{
 		const char *name = data->GetName();
-		const char *value = data->GetString();
 
 		if ( Q_strlen( name ) <= 0 )
 		{
@@ -1407,7 +1406,7 @@ bool CTankSpawner::Parse( KeyValues *values )
 		}
 		else if ( !Q_stricmp( name, "ClassIcon" ) )
 		{
-			m_iszClassIcon = AllocPooledString( value );
+			m_iszClassIcon = AllocPooledString(data->GetString());
 		}
 		else if ( !Q_stricmp( name, "Skin" ) )
 		{
@@ -1472,6 +1471,16 @@ bool CTankSpawner::Spawn( const Vector &here, EntityHandleVector_t *result )
 		DevMsg( "CTankSpawner: %3.2f: Failed to create base_boss\n", gpGlobals->curtime );
 	}
 	return false;
+}
+
+string_t CTankSpawner::GetClassIcon(int nSpawnNum)
+{
+	if (m_iszClassIcon != NULL_STRING)
+	{
+		return m_iszClassIcon;
+	}
+
+	return MAKE_STRING( "tank" );
 }
 
 
