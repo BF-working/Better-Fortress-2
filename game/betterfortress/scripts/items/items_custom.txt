@@ -873,6 +873,15 @@
 				"engineer" "1"
 			}
 		}
+		//Sniper Hat - Professional's Ushanka
+		"30598"
+		{
+			"used_by_classes"
+			{
+				"sniper"		"1"
+				"engineer"		"1"
+			}
+		}
 		//------------------------
 		// CUSTOM TAUNTS
 		//------------------------

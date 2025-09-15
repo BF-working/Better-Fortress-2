@@ -161,7 +161,8 @@ ScriptVariant_t CScriptConvarAccessor::GetStr( const char *cvar )
 		if ( cref.IsFlagSet( FCVAR_SCRIPT_NONO ) )
 		{
 			// the funny.
-			return "hunter2";
+			// In my own terms.
+			return "Nice try you gugu gaga";
 		}
 		return cref.GetString();
 	}
