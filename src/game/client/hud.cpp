@@ -1274,3 +1274,25 @@ CON_COMMAND_F( testhudanim, "Test a hud element animation.\n\tArguments: <anim n
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( args[1] );
 }
 
+CON_COMMAND_F( extract_ctx_data, "Extracts data from a specified ctx file.\n\tArguments: <filename>\n", FCVAR_NONE )
+{
+	if ( args.ArgC() != 2 )
+	{
+		Msg("Usage:\n   extract_ctx_data <filename>\n");
+		return;
+	}
+
+	KeyValues *pKeyValuesData = ReadEncryptedKVFile( filesystem, args[1], GetTFEncryptionKey());
+	if ( pKeyValuesData )
+	{
+		char szFullName[512];
+		Q_snprintf( szFullName, sizeof(szFullName), "%s.txt", args[1] );
+		pKeyValuesData->SaveToFile( filesystem, szFullName );
+	}
+	else
+	{
+		Msg("No file found matching %s\n", args[1]);
+	}
+	pKeyValuesData->deleteThis();
+}
+

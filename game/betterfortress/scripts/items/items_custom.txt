@@ -258,7 +258,7 @@
 		"weapon_bmmh"
 		{
 			"enabled"	"1"
-			"item_class"	"tf_weapon_sentry_revenge"
+			"item_class"	"tf_weapon_bmmh"
 			"craft_class"	"weapon"
 			"craft_material_type"	"weapon"
 			"capabilities"
@@ -273,7 +273,7 @@
 				"can_deal_long_distance_damage"	"1"
 				"can_deal_taunt_damage"		"1"
 			}
-			"base_item_name"	"The Frontier Justice"
+			"base_item_name"	"The Big Mean Mother Hubbard"
 			"show_in_armory"	"1"
 			"item_type_name"	"#TF_Weapon_Shotgun"
 			"item_name"	"#TF_Unique_Sentry_Shotgun"
@@ -296,21 +296,6 @@
 			}
 			"attributes"
 			{
-				"mod ammo per shot"
-				{
-					"attribute_class"	"mod_ammo_per_shot"
-					"value"	"40"
-				}
-				"mod use metal ammo type"
-				{
-					"attribute_class"	"mod_use_metal_ammo_type"
-					"value"	"1"
-				}
-				"mod max primary clip override"
-				{
-					"attribute_class"	"mod_max_primary_clip_override"
-					"value"	"-1"
-				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
