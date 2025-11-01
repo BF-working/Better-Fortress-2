@@ -1545,11 +1545,7 @@ void CTFPlayerShared::OnDataChanged( void )
 		GetActiveTFWeapon()->SetWeaponVisible( false );
 	}
 
-	// Local player will run this in PreThink
-	if ( !prediction->InPrediction() )
-	{
-		InvisibilityThink();
-	}
+	InvisibilityThink();
 }
 
 //-----------------------------------------------------------------------------

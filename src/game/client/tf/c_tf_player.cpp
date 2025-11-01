@@ -6250,7 +6250,8 @@ void C_TFPlayer::ClientThink()
 	}
 }
 
-void C_TFPlayer::UpdateTimers() {
+void C_TFPlayer::UpdateTimers( void )
+{
 	m_Shared.SharedThink();
 }
 
