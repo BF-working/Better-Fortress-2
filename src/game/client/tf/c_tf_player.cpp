@@ -3899,6 +3899,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_TFPlayer, DT_TFPlayer, CTFPlayer )
 	RecvPropBool( RECVINFO( m_bIsRobot ) ),
 	RecvPropBool( RECVINFO( m_bViewingCYOAPDA ) ),
 	RecvPropBool( RECVINFO( m_bRegenerating ) ),
+	RecvPropEHandle( RECVINFO( m_hOffHandWeapon ) ),
 END_RECV_TABLE()
 
 
