@@ -1475,6 +1475,12 @@ void CTFPlayerShared::OnPreDataChanged( void )
 	m_nOldDisguiseClass = GetDisguiseClass();
 	m_nOldDisguiseTeam = GetDisguiseTeam();
 	m_iOldMovementStunParity = m_iMovementStunParity;
+
+	// Local player will run this in PreThink
+	if ( !prediction->InPrediction() )
+	{
+		SharedThink();
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1535,6 +1541,12 @@ void CTFPlayerShared::OnDataChanged( void )
 	if ( ( IsLoser() || InCond( TF_COND_COMPETITIVE_LOSER ) ) && GetActiveTFWeapon() && !GetActiveTFWeapon()->IsEffectActive( EF_NODRAW ) )
 	{
 		GetActiveTFWeapon()->SetWeaponVisible( false );
+	}
+
+	// Local player will run this in PreThink
+	if ( !prediction->InPrediction() )
+	{
+		InvisibilityThink();
 	}
 }
 
