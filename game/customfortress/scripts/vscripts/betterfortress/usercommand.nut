@@ -1,6 +1,8 @@
+// console commands:
 // scripted_user_func size big
 // scripted_user_func size normal
 // scripted_user_func size small
+// scripted_user_func size smaller
 
 function UserConsoleCommand(player, arg)
 {
@@ -19,5 +21,8 @@ function UserConsoleCommand(player, arg)
 			player.SetModelScale(0.5, 1)
 		break
 		
+		case "size smaller":
+			player.SetModelScale(0.25, 1)
+		break
 	}
 }
