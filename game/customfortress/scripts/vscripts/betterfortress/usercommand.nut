@@ -1,13 +1,20 @@
 // console commands:
+// scripted_user_func size bigger
 // scripted_user_func size big
 // scripted_user_func size normal
 // scripted_user_func size small
 // scripted_user_func size smaller
+//
+// read code to understand it more
 
 function UserConsoleCommand(player, arg)
 {
 	switch(arg)
 	{
+		
+		case "size bigger":
+			player.SetModelScale(3, 1)
+		break
 		
 		case "size big":
 			player.SetModelScale(2, 1)
