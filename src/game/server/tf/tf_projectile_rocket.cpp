@@ -156,8 +156,8 @@ void CTFProjectile_Rocket::Deflected( CBaseEntity *pDeflectedBy, Vector &vecDir 
 	CTFPlayer *pOldOwner = ToTFPlayer( GetOwnerEntity() );
 	if ( pOldOwner == nullptr )
 	{
-		CBaseObject *pBaseObject = dynamic_cast< CBaseObject* >( GetOwnerEntity() );
-		if ( pBaseObject && pBaseObject->GetOwner() )
+		CBaseObject* pBaseObject = dynamic_cast< CBaseObject* >( GetOwnerEntity() );
+		if (pBaseObject && pBaseObject->GetOwner() )
 		{
 			pOldOwner = ToTFPlayer( pBaseObject->GetOwner() );
 		}
