@@ -136,6 +136,7 @@ END_NETWORK_TABLE()
 BEGIN_DATADESC( CTFRobotDestruction_Robot )
 #ifdef GAME_DLL
 	DEFINE_INPUTFUNC( FIELD_VOID, "StopAndUseComputer", InputStopAndUseComputer ),
+	DEFINE_INPUTFUNC( FIELD_STRING, "SetPath", InputSetPath),
 
 	DEFINE_OUTPUT( m_OnPanicStart, "OnPanicStart" ),
 	DEFINE_OUTPUT( m_OnPanicEnd, "OnPanicEnd" ),
@@ -236,6 +237,7 @@ void CTFRobotDestruction_Robot::Spawn()
 		Assert(m_pDispenser);
 		m_pDispenser->SetParent(this);
 		m_pDispenser->Spawn();
+		m_pDispenser->AddEffects(EF_NODRAW);
 		m_pDispenser->ChangeTeam(GetTeamNumber());
 		m_pDispenser->OnGoActive();
 	}
@@ -723,6 +725,14 @@ void CTFRobotDestruction_Robot::InputStopAndUseComputer( inputdata_t &inputdata 
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: Tell the robot where to go.
+//-----------------------------------------------------------------------------
+void CTFRobotDestruction_Robot::InputSetPath( inputdata_t &inputdata )
+{
+	m_hNextPath = dynamic_cast< CPathTrack * >( gEntList.FindEntityByName( NULL, inputdata.value.String() ) );
+}
+
+//-----------------------------------------------------------------------------
 // Purpose: Shoot bars out as we die
 //-----------------------------------------------------------------------------
 void CTFRobotDestruction_Robot::SpewBars( int nNumToSpew )
@@ -808,8 +818,23 @@ void CTFRobotDestruction_Robot::RepairSelfThink()
 
 void CTFRobotDestruction_Robot::ArriveAtPath()
 {
-	m_hNextPath->AcceptInput( "InPass", this, this, variant_t(), 0 );
-	m_hNextPath = m_hNextPath->GetNext();
+	CPathTrack *pCurrentNode = m_hNextPath.Get();
+
+    if ( !pCurrentNode )
+        return;
+
+    CPathTrack *pNextNode = m_hNextPath->GetNext();
+
+    if ( pNextNode )
+    {
+		m_hNextPath->AcceptInput( "InPass", this, this, variant_t(), 0 );
+        m_hNextPath = pNextNode;
+    }
+    else
+    {
+        m_hNextPath = NULL;
+        DevMsg("ROBOT DESTRUCTION: Robot (%s) reached dead end.\n", GetDebugName() );
+    }
 }
 
 void CTFRobotDestruction_Robot::EnableUber()
@@ -875,6 +900,12 @@ public:
 	{
 		CPathTrack* pNextPath = pMe->GetNextPath();
 
+		if ( pNextPath == NULL )
+		{
+			// Maybe the robot should look for a path or idle?
+			return Continue(); 
+		}
+
 		if ( pMe->IsRangeGreaterThan( pNextPath, CLOSE_ENOUGH_TO_PATH ) )
 		{
 			if ( m_path.GetAge() > 0.5f )
@@ -888,6 +919,7 @@ public:
 		else
 		{
 			pMe->ArriveAtPath();
+			m_path.Invalidate();
 		}
 
 		return Continue();
