@@ -287,6 +287,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
 	SendPropEHandle (SENDINFO(m_hEffectEntity)),
 	SendPropEHandle (SENDINFO_NAME(m_hMoveParent, moveparent)),
 	SendPropInt		(SENDINFO(m_iParentAttachment), NUM_PARENTATTACHMENT_BITS, SPROP_UNSIGNED),
+	SendPropInt( SENDINFO( m_nTFFlags ), 20, SPROP_UNSIGNED ),
 
 	SendPropInt		(SENDINFO_NAME( m_MoveType, movetype ), MOVETYPE_MAX_BITS, SPROP_UNSIGNED ),
 	SendPropInt		(SENDINFO_NAME( m_MoveCollide, movecollide ), MOVECOLLIDE_MAX_BITS, SPROP_UNSIGNED ),
@@ -2464,12 +2465,8 @@ BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities"
 	DEFINE_SCRIPTFUNC_NAMED( ScriptToggleCollisionsOn, "ToggleCollisionsOn", "Toggle Collisions between 2 entities" )
 
 	//TF2 Specific
-	DEFINE_SCRIPTFUNC_NAMED( ScriptSetExplodeProjectilesOnTouch, "SetExplodeProjectilesOnTouch", "Make Some Projectiles explode on contact with this entity." )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptCanStickProjectiles, "CanStickProjectiles", "Make Stickybombs attach with this entity." )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptCanBeHealed, "CanBeHealed", "Make this entity Healable from Mediguns." )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptSetTargetable, "SetTargetable", "UNFINISHED: Make this entity Targetable from Bots or Sentryguns." )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptSetBurnable, "SetBurnable", "Make this entity catch fire from Pyro weapons.")
-	DEFINE_SCRIPTFUNC_NAMED( ScriptSetObservable, "SetObservable", "Make this entity Observable.")
+	DEFINE_SCRIPTFUNC( AddTFFlags, "" )
+	DEFINE_SCRIPTFUNC( RemoveTFFlags, "" )
 	
 	DEFINE_SCRIPTFUNC( TerminateScriptScope, "Clear the current script scope for this entity" )
 
