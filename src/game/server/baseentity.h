@@ -1257,12 +1257,7 @@ public:
 	CNetworkVarForDerived( char , m_takedamage );
 
 	//TF2 Specific
-	CNetworkVarForDerived( bool , m_bExplodesProjectiles );
-	CNetworkVarForDerived( bool , m_bSticksProjectiles );
-	CNetworkVarForDerived( int , m_bCanBeHealed );
-	CNetworkVarForDerived( bool , m_bCanBeTargeted );
-	CNetworkVarForDerived( bool , m_bCanBeBurned );
-	CNetworkVarForDerived( bool , m_bCanBeObserved );
+	CNetworkVarForDerived( int , m_nTFFlags );
 
 	// Damage filtering
 	string_t	m_iszDamageFilterName;	// The name of the entity to use as our damage filter.
@@ -1452,12 +1447,15 @@ public:
 	}
 
 	//TF2 Specific
-	void ScriptSetExplodeProjectilesOnTouch( bool bValue ) { m_bExplodesProjectiles = bValue; }
-	void ScriptCanStickProjectiles( bool bValue ) { m_bSticksProjectiles = bValue; }
-	void ScriptCanBeHealed( int bValue ) { m_bCanBeHealed = bValue; }
-	void ScriptSetTargetable( bool bValue ) { m_bCanBeTargeted = bValue; }
-	void ScriptSetBurnable(bool bValue) { m_bCanBeBurned = bValue; }
-	void ScriptSetObservable(bool bValue) { m_bCanBeObserved = bValue; }
+	void AddTFFlags( int nTFFlags )
+	{
+		m_nTFFlags |= nTFFlags;
+	}
+
+	void RemoveTFFlags( int nTFFlags )
+	{
+		m_nTFFlags &= ~nTFFlags;
+	}
 
 	HSCRIPT ScriptGetModelKeyValues( void );
 

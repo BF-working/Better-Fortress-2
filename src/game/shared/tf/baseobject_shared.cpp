@@ -605,6 +605,12 @@ bool CBaseObject::CalculatePlacementPos( void )
 		return false;
 	}
 
+	//Vscript: Force it to be buildable
+	if ( tr.m_pEnt && tr.m_pEnt->m_nTFFlags & SUPPORTS_ENGINEER_BUILDINGS )
+	{
+		return true;
+	}
+
 	// Don't allow buildables on the train just yet.
 	if ( tr.m_pEnt && tr.m_pEnt->IsBSPModel() )
 	{

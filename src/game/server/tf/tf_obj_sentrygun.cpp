@@ -999,6 +999,41 @@ bool CObjectSentrygun::FindTarget()
 			}
 		}
 
+
+		if ( pTargetCurrent == NULL )
+		{
+			// Search for generic entities that are marked as TARGETABLE
+			CBaseEntity *pEnt = NULL;
+			for ( CEntitySphereQuery sphere( vecSentryOrigin, m_flSentryRange ); ( pEnt = sphere.GetCurrentEntity() ) != NULL; sphere.NextEntity() )
+			{
+				if ( !pEnt || pEnt == this )
+					continue;
+
+				bool bIsTargetable = ( pEnt->m_nTFFlags & TARGETABLE );
+
+				if ( bIsTargetable )
+				{
+					// Only target enemies
+					if ( pEnt->GetTeamNumber() == iEnemyTeam || pEnt->GetTeamNumber() == TEAM_ANY )
+					{
+						vecTargetCenter = pEnt->GetAbsOrigin() + pEnt->GetViewOffset();
+						VectorSubtract( vecTargetCenter, vecSentryOrigin, vecSegment );
+						float flDist2 = vecSegment.LengthSqr();
+
+						if ( flDist2 < flMinDist2 )
+						{
+							// Final check: Can the sentry actually see it?
+							if ( FVisible( pEnt, MASK_SHOT | CONTENTS_GRATE ) )
+							{
+								flMinDist2 = flDist2;
+								pTargetCurrent = pEnt;
+							}
+						}
+					}
+				}
+			}
+		}
+
 		if ( ( pTargetCurrent == NULL ) && !bTruceActive )
 		{
 			// target objects
