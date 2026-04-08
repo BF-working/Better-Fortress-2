@@ -64,9 +64,6 @@ enum loadout_positions_t
 	// other
 	LOADOUT_POSITION_ACTION,
 
-	// Special skin slot for whole body cosmetics
-	LOADOUT_POSITION_SKIN,
-
 	// More wearables, yay!
 	LOADOUT_POSITION_MISC2,
 
@@ -85,6 +82,9 @@ enum loadout_positions_t
 	LOADOUT_POSITION_THROWABLE2,
 	LOADOUT_POSITION_THROWABLE3,
 	LOADOUT_POSITION_THROWABLE4,
+
+	// Custom Fortress 2 (Extra) Slots
+	LOADOUT_POSITION_SKIN,
 
 	CLASS_LOADOUT_POSITION_COUNT,
 };
