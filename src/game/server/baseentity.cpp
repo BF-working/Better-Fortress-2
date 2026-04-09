@@ -2147,6 +2147,7 @@ BEGIN_DATADESC_NO_BASE( CBaseEntity )
 	DEFINE_KEYFIELD( m_iszKillerPrintName, FIELD_STRING, "print_killername"),
 	DEFINE_KEYFIELD( m_iszVictimPrintName, FIELD_STRING, "print_victimname"),
 	DEFINE_KEYFIELD( m_iszKilliconPrint, FIELD_STRING, "print_killicon"),
+	DEFINE_KEYFIELD( m_nTFFlags, FIELD_INTEGER, "TFFlags" ),
 
 //	DEFINE_FIELD( m_bSentLastFrame, FIELD_INTEGER ),
 
@@ -2392,9 +2393,9 @@ BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities"
 	DEFINE_SCRIPTFUNC( KeyValueFromVector, "Executes KeyValue with a vector" )
 
 	// TF2-specific
-	DEFINE_SCRIPTFUNC( AddTFFlags, "Adds a new TF-specific flag into the entity." )
-	DEFINE_SCRIPTFUNC( HasTFFlags, "Determines whether the entity has a TF-specific flag applied." )
-	DEFINE_SCRIPTFUNC( RemoveTFFlags, "Removes a TF-specific flag from the entity." )
+	DEFINE_SCRIPTFUNC( AddTFFlags, "Adds a new TF2 specific flag into the entity." )
+	DEFINE_SCRIPTFUNC( HasTFFlags, "Determines whether the entity has a TF2 specific flag applied." )
+	DEFINE_SCRIPTFUNC( RemoveTFFlags, "Removes a TF2 specific flag from the entity." )
 
 	DEFINE_SCRIPTFUNC( IsObservable, "Determines whether the entity can be observed by spectators/observers." )
 	DEFINE_SCRIPTFUNC( IsMediGunTargetable, "Determines whether the entity can be healed by Medic's MediGun." )
@@ -5617,9 +5618,9 @@ void CBaseEntity::Remove( )
 	UTIL_Remove( this );
 }
 
-bool CBaseEntity::IsObservable() const { return HasTFFlags(OBSERVABLE); }
-bool CBaseEntity::IsMediGunTargetable() const { return HasTFFlags(MEDIGUN_CAN_HEAL); }
-bool CBaseEntity::IsSentryTargetable() const { return HasTFFlags(TARGETABLE); }
+bool CBaseEntity::IsObservable() const { return HasTFFlags(TFFLAG_OBSERVABLE); }
+bool CBaseEntity::IsMediGunTargetable() const { return HasTFFlags(TFFLAG_MEDIGUN_CAN_HEAL); }
+bool CBaseEntity::IsSentryTargetable() const { return HasTFFlags(TFFLAG_TARGETABLE); }
 
 //-----------------------------------------------------------------------------
 // VScript access to model's key values

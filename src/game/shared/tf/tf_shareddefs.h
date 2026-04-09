@@ -1341,15 +1341,16 @@ inline bool IsHeadshot( int iType )
 	return (iType == TF_DMG_CUSTOM_HEADSHOT || iType == TF_DMG_CUSTOM_HEADSHOT_DECAPITATION);
 }
 
-enum TFSpecificFlags
+enum
 {
-	PROJECTILES_EXPLODE_ON_TOUCH	= 1<<0,		//Demoman Pipebombs, Jars, and anything that usually bounces off, will explode on contact.					
-	STICKS_PROJECTILES				= 1<<1,		//Stickybombs will parent to this target.			
-	MEDIGUN_CAN_HEAL				= 1<<2,		//Medic can heal this target.					
-	TARGETABLE					    = 1<<3,		//Sentryguns will consider this a valid target.
-	FLAMMABLE						= 1<<4,		//Flamethrowers will burn this target.
-	OBSERVABLE						= 1<<5,		//Adds the entity to the observable list, like bosses.
-	SUPPORTS_ENGINEER_BUILDINGS		= 1<<6,		//Allows Engineers to build on top of it.
+	TFFLAG_PROJECTILES_EXPLODE_ON_TOUCH		= 1<<0,		//Demoman Pipebombs, Jars, and anything that usually bounces off, will explode on contact.					
+	TFFLAG_STICKS_PROJECTILES				= 1<<1,		//Stickybombs will parent to this target.			
+	TFFLAG_MEDIGUN_CAN_HEAL					= 1<<2,		//Medic can heal this target.					
+	TFFLAG_TARGETABLE					    = 1<<3,		//Sentryguns will consider this a valid target.
+	TFFLAG_FLAMMABLE						= 1<<4,		//Flamethrowers will burn this target.
+	TFFLAG_OBSERVABLE						= 1<<5,		//Adds the entity to the observable list, like bosses.
+	TFFLAG_SUPPORTS_ENGINEER_BUILDINGS		= 1<<6,		//Allows Engineers to build on top of it.
+	TFFLAG_AIRBLASTABLE						= 1<<7,		//Pyro can now airblast this object, just like the beachball.
 };
 
 enum
