@@ -2391,6 +2391,7 @@ BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities"
 	DEFINE_SCRIPTFUNC( KeyValueFromInt, "Executes KeyValue with an int" )
 	DEFINE_SCRIPTFUNC( KeyValueFromVector, "Executes KeyValue with a vector" )
 
+	// TF2-specific
 	DEFINE_SCRIPTFUNC( AddTFFlags, "Adds a new TF-specific flag into the entity." )
 	DEFINE_SCRIPTFUNC( HasTFFlags, "Determines whether the entity has a TF-specific flag applied." )
 	DEFINE_SCRIPTFUNC( RemoveTFFlags, "Removes a TF-specific flag from the entity." )
@@ -2472,10 +2473,6 @@ BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities"
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetElasticity, "GetElasticity", "Get the entity's Elasticity" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptToggleCollisionsOn, "ToggleCollisionsOn", "Toggle Collisions between 2 entities" )
 
-	//TF2 Specific
-	DEFINE_SCRIPTFUNC( AddTFFlags, "" )
-	DEFINE_SCRIPTFUNC( RemoveTFFlags, "" )
-	
 	DEFINE_SCRIPTFUNC( TerminateScriptScope, "Clear the current script scope for this entity" )
 
 	DEFINE_SCRIPTFUNC_NAMED( ScriptAcceptInput, "AcceptInput", "Generate a synchronous I/O event" )
