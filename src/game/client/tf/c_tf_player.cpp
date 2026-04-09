@@ -6250,10 +6250,6 @@ void C_TFPlayer::ClientThink()
 	}
 }
 
-void C_TFPlayer::UpdateTimers() {
-	m_Shared.SharedThink();
-}
-
 void C_TFPlayer::MVM_StartIdleSound(void)
 {
 	MVM_StopIdleSound();

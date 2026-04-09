@@ -606,7 +606,7 @@ bool CWeaponMedigun::AllowedToHealTarget( CBaseEntity *pTarget )
 	{
 
 		// VSCRIPT - Allow anything to be healable
-		if ( pTarget->m_nTFFlags & MEDIGUN_CAN_HEAL )
+		if ( pTarget->m_nTFFlags & TFFLAG_MEDIGUN_CAN_HEAL )
 		{
 			//TODO: Add a way to filter? probably using a 2nd networked thing...
 			/*if (!pTarget->InSameTeam(pOwner) && pTarget->m_bCanBeHealed == 1)

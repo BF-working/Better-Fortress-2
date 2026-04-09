@@ -17982,7 +17982,7 @@ int CTFPlayer::BuildObservableEntityList( void )
 	CBaseEntity *pEntity = gEntList.FirstEnt();
 	while ( pEntity )
 	{
-		if( pEntity->m_nTFFlags & OBSERVABLE )
+		if( pEntity->m_nTFFlags & TFFLAG_OBSERVABLE )
 		{
 			m_hObservableEntities.AddToTail( pEntity );
 
@@ -18386,7 +18386,7 @@ void CTFPlayer::ValidateCurrentObserverTarget( void )
 			ForceObserverMode( OBS_MODE_CHASE );
 		}
 		//[VSCRIPT] Generic Observable
-		if ( !(m_hObserverTarget->m_nTFFlags & OBSERVABLE) && !IsValidObserverTarget(m_hObserverTarget))
+		if ( !(m_hObserverTarget->m_nTFFlags & TFFLAG_OBSERVABLE) && !IsValidObserverTarget(m_hObserverTarget))
 			FindInitialObserverTarget();
 	}
 

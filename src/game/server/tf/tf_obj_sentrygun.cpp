@@ -1002,14 +1002,14 @@ bool CObjectSentrygun::FindTarget()
 
 		if ( pTargetCurrent == NULL )
 		{
-			// Search for generic entities that are marked as TARGETABLE
+			// Search for generic entities that are marked as TFFLAG_TARGETABLE
 			CBaseEntity *pEnt = NULL;
 			for ( CEntitySphereQuery sphere( vecSentryOrigin, m_flSentryRange ); ( pEnt = sphere.GetCurrentEntity() ) != NULL; sphere.NextEntity() )
 			{
 				if ( !pEnt || pEnt == this )
 					continue;
 
-				bool bIsTargetable = ( pEnt->m_nTFFlags & TARGETABLE );
+				bool bIsTargetable = ( pEnt->m_nTFFlags & TFFLAG_TARGETABLE );
 
 				if ( bIsTargetable )
 				{
