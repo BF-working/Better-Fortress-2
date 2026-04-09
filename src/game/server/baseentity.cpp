@@ -2391,6 +2391,14 @@ BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities"
 	DEFINE_SCRIPTFUNC( KeyValueFromInt, "Executes KeyValue with an int" )
 	DEFINE_SCRIPTFUNC( KeyValueFromVector, "Executes KeyValue with a vector" )
 
+	DEFINE_SCRIPTFUNC( AddTFFlags, "Adds a new TF-specific flag into the entity." )
+	DEFINE_SCRIPTFUNC( HasTFFlags, "Determines whether the entity has a TF-specific flag applied." )
+	DEFINE_SCRIPTFUNC( RemoveTFFlags, "Removes a TF-specific flag from the entity." )
+
+	DEFINE_SCRIPTFUNC( IsObservable, "Determines whether the entity can be observed by spectators/observers." )
+	DEFINE_SCRIPTFUNC( IsMediGunTargetable, "Determines whether the entity can be healed by Medic's MediGun." )
+	DEFINE_SCRIPTFUNC( IsSentryTargetable, "Determines whether the entity can be targeted by Engineer's Sentry Gun." )
+
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetModelKeyValues, "GetModelKeyValues", "Get a KeyValue class instance on this entity's model")
 
 	DEFINE_SCRIPTFUNC( ValidateScriptScope, "Ensure that an entity's script scope has been created" )
@@ -5611,6 +5619,10 @@ void CBaseEntity::Remove( )
 {
 	UTIL_Remove( this );
 }
+
+bool CBaseEntity::IsObservable() const { return HasTFFlags(OBSERVABLE); }
+bool CBaseEntity::IsMediGunTargetable() const { return HasTFFlags(MEDIGUN_CAN_HEAL); }
+bool CBaseEntity::IsSentryTargetable() const { return HasTFFlags(TARGETABLE); }
 
 //-----------------------------------------------------------------------------
 // VScript access to model's key values

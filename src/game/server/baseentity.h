@@ -1452,10 +1452,18 @@ public:
 		m_nTFFlags |= nTFFlags;
 	}
 
+	bool HasTFFlags(int nTFFlags) const {
+		return m_nTFFlags & nTFFlags;
+	}
+
 	void RemoveTFFlags( int nTFFlags )
 	{
 		m_nTFFlags &= ~nTFFlags;
 	}
+
+	bool IsObservable() const;
+	bool IsMediGunTargetable() const;
+	bool IsSentryTargetable() const;
 
 	HSCRIPT ScriptGetModelKeyValues( void );
 
