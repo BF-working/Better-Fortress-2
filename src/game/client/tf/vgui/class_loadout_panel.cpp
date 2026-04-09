@@ -105,7 +105,7 @@ bool IsTauntPanelPosition( int iButtonPos )
 
 bool IsExtraPanelPosition( int iButtonPos )
 {
-	return iButtonPos >= 17;
+	return iButtonPos >= 20 && iButtonPos <= 24;
 }
 
 const LoadoutPanelPositioningInstance g_DefaultLoadoutPanelPositioning =
@@ -130,7 +130,11 @@ const LoadoutPanelPositioningInstance g_DefaultLoadoutPanelPositioning =
 		14,	// LOADOUT_POSITION_TAUNT6,
 		15,	// LOADOUT_POSITION_TAUNT7,
 		16,	// LOADOUT_POSITION_TAUNT8,
-		17,	// LOADOUT_POSITION_SKIN,
+		20, // LOADOUT_POSITION_SKIN
+		//21, // LOADOUT_POSITION_THROWABLE
+		//22, // LOADOUT_POSITION_THROWABLE2
+		//23, // LOADOUT_POSITION_THROWABLE3
+		//24, // LOADOUT_POSITION_THROWABLE4
 	}
 };
 
@@ -156,7 +160,11 @@ const LoadoutPanelPositioningInstance g_LoadoutPanelPositioning_Spy =
 		14,	// LOADOUT_POSITION_TAUNT6,
 		15,	// LOADOUT_POSITION_TAUNT7,
 		16,	// LOADOUT_POSITION_TAUNT8,
-		17,	// LOADOUT_POSITION_SKIN,
+		20, // LOADOUT_POSITION_SKIN
+		//21, // LOADOUT_POSITION_THROWABLE
+		//22, // LOADOUT_POSITION_THROWABLE2
+		//23, // LOADOUT_POSITION_THROWABLE3
+		//24, // LOADOUT_POSITION_THROWABLE4
 	}
 };
 
@@ -182,7 +190,11 @@ const LoadoutPanelPositioningInstance g_LoadoutPanelPositioning_Engineer =
 		14,	// LOADOUT_POSITION_TAUNT6,
 		15,	// LOADOUT_POSITION_TAUNT7,
 		16,	// LOADOUT_POSITION_TAUNT8,
-		17,	// LOADOUT_POSITION_SKIN,
+		20, // LOADOUT_POSITION_SKIN
+		//21, // LOADOUT_POSITION_THROWABLE
+		//22, // LOADOUT_POSITION_THROWABLE2
+		//23, // LOADOUT_POSITION_THROWABLE3
+		//24, // LOADOUT_POSITION_THROWABLE4
 	}
 };
 
@@ -621,7 +633,7 @@ void CClassLoadoutPanel::PerformLayout( void )
 	{
 		m_vecItemOptionButtons[i]->SetVisible( false );
 	}
-	
+
 	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
 	{
 		// Viewing a class loadout. Layout the buttons & the class image.
@@ -637,15 +649,26 @@ void CClassLoadoutPanel::PerformLayout( void )
 			iButtonPos = g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[i];
 		}
 
+		DevMsg("Slot %2d -> Pos %2d | Taunt:%d Extra:%d\n",
+			i,
+			iButtonPos,
+			IsTauntPanelPosition(iButtonPos),
+			IsExtraPanelPosition(iButtonPos)
+		);
+
 		bool bIsVisible = false;
 		if (iButtonPos > 0)
 		{
 			const bool isExtra = IsExtraPanelPosition(iButtonPos);
 			const bool isTaunt = IsTauntPanelPosition(iButtonPos);
 
-			bIsVisible =
-				(m_bInExtraLoadoutMode ? isExtra : !isExtra) &&
-				(m_bInTauntLoadoutMode ? isTaunt : !isTaunt);
+			if (m_bInTauntLoadoutMode) {
+				bIsVisible = isTaunt;
+			} else if (m_bInExtraLoadoutMode) {
+				bIsVisible = isExtra;
+			} else {
+				bIsVisible = !isTaunt && !isExtra;
+			}
 		}
 		m_pItemModelPanels[i]->SetVisible( bIsVisible );
 
@@ -679,7 +702,7 @@ void CClassLoadoutPanel::PerformLayout( void )
 			if ( i < m_vecItemOptionButtons.Count() )
 			{
 				// Place the button just inside the item model panel
-				CExButton* pItemOptionsPanel = m_vecItemOptionButtons[iButtonPos];
+				CExButton* pItemOptionsPanel = m_vecItemOptionButtons[i];
 				int iButtonWide = m_pItemModelPanels[i]->GetWide();
 				int iMyWide = pItemOptionsPanel->GetWide();
 				int iOptionsXPos = iColumn == 0 
