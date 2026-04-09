@@ -556,7 +556,7 @@
 		"ControlName"	"CExImageButton"
 		"fieldName"		"CharacterLoadoutButton"
 		"labelText"		""
-		"xpos"			"c-48"
+		"xpos"			"c-52"
 		"ypos"			"c90"
 		"zpos"			"2"
 		"wide"			"25"
