@@ -928,7 +928,7 @@ ConVar tf_mvm_buybacks_per_wave( "tf_mvm_buybacks_per_wave", "3", FCVAR_REPLICAT
 
 //MVM Versus - Convars
 ConVar cf_mvmvs_enable("cf_mvmvs_enable", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "Enable versus in MvM");
-ConVar cf_gamemode_mvmvs( "cf_gamemode_mvmvs", "0", FCVAR_REPLICATED | FCVAR_NOTIFY);
+ConVar cf_gamemode_mvmvs("cf_gamemode_mvmvs", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY);
 ConVar cf_mvmvs_robot_stations( "cf_mvmvs_robot_stations", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Allow Robots to use upgrade stations");
 ConVar cf_mvmvs_use_loadout( "cf_mvmvs_use_loadout", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "Robot players will spawn with their loadout items, if not, will be picked from the robot selection list file");
 ConVar cf_mvmvs_playstyle( "cf_mvmvs_playstyle", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "MvM Versus playstyle: 0 = Classic (spawn with loadout, random giants/gatebots), 1 = Popfile List (load robots from current wave)" );
