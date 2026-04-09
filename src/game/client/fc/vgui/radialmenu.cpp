@@ -40,8 +40,60 @@ ConVar cl_rosetta_line_outer_radius( "cl_rosetta_line_outer_radius", "45" );
 void FlushClientMenus( void );
 
 //--------------------------------------------------------------------------------------------------------
-static char s_radialMenuName[ 4 ][ 64 ];
-static bool s_mouseMenuKeyHeld[ 4 ];
+// Just doing 1 for now. No splitscreen support on sdk 2013.
+static char s_radialMenuName[ 1 ][ 64 ];
+static bool s_mouseMenuKeyHeld[ 1 ];
+
+//--------------------------------------------------------------------------------------------------------
+/**
+ * Button class that clips its visible bounds to an concave polygon (defined counter-clockwise).
+ * An optional second hotspot can be defined for capturing mouse input outside of the visible hotspot.
+ */
+class CPolygonButton : public vgui::Button
+{
+	DECLARE_CLASS_SIMPLE( CPolygonButton, vgui::Button );
+
+public:
+
+	CPolygonButton( vgui::Panel *parent, const char *panelName );
+
+	virtual void ApplySettings( KeyValues *data );
+
+	/**
+	 * Clip out cursor positions inside our overall rectangle that are outside our hotspot.
+	 */
+	virtual vgui::VPANEL IsWithinTraverse( int x, int y, bool traversePopups );
+
+	/**
+	 * Perform the standard layout, and scale our hotspot points - they are specified as a 0..1 percentage
+	 * of the button's full size.
+	 */
+	virtual void PerformLayout( void );
+
+	/**
+	 * Center the text in the extent that encompasses our hotspot.
+	 * TODO: allow the res file and/or the individual menu to specify a different center for text.
+	 */
+	virtual void ComputeAlignment( int &tx0, int &ty0, int &tx1, int &ty1 );
+	virtual void PaintBackground( void );
+	virtual void PaintBorder( void );
+	virtual void ApplySchemeSettings( vgui::IScheme *scheme );
+
+	virtual void UpdateHotspots( KeyValues *data );
+
+protected:
+	int m_nWhiteMaterial;
+
+	CUtlVector< Vector2D > m_unscaledHotspotPoints;
+	CUtlVector< Vector2D > m_unscaledVisibleHotspotPoints;
+	vgui::Vertex_t *m_hotspotPoints;
+	int m_numHotspotPoints;
+	vgui::Vertex_t *m_visibleHotspotPoints;
+	int m_numVisibleHotspotPoints;
+
+	Vector2D m_hotspotMins;
+	Vector2D m_hotspotMaxs;
+};
 
 //--------------------------------------------------------------------------------------------------------
 CPolygonButton::CPolygonButton( vgui::Panel *parent, const char *panelName )
@@ -335,7 +387,7 @@ public:
 	}
 
 	//----------------------------------------------------------------------------------------------------
-	void UpdateHotspots( KeyValues *data )
+	void CRadialButton::UpdateHotspots( KeyValues *data )
 	{
 		BaseClass::UpdateHotspots( data );
 
@@ -371,7 +423,7 @@ public:
 	}
 
 	//----------------------------------------------------------------------------------------------------
-	void PerformLayout( void )
+	void CRadialButton::PerformLayout( void )
 	{
 		int wide, tall;
 		GetSize( wide, tall );
@@ -751,7 +803,7 @@ CHudElement( pElementName ), BaseClass( NULL, PANEL_RADIAL_MENU )
 
 	// initialize dialog
 	m_resource = new KeyValues( "RadialMenu" );
-	m_resource->LoadFromFile( filesystem, "Resource/UI/Custom/RadialMenu.res" );
+	m_resource->LoadFromFile( filesystem, "resource/UI/RadialMenu.res" );
 	m_menuData = NULL;
 	FlushClientMenus();
 
@@ -855,7 +907,7 @@ CRadialMenu::~CRadialMenu()
 
 void CRadialMenu::HandleControlSettings()
 {
-	LoadControlSettings("Resource/UI/Custom/RadialMenu.res");
+	LoadControlSettings("Resource/UI/RadialMenu.res");
 
 	for ( int i=0; i<NUM_BUTTON_DIRS; ++i )
 	{
@@ -1384,7 +1436,7 @@ void CRadialMenu::SetData( KeyValues *data )
 	{
 		m_resource->deleteThis();
 		m_resource = new KeyValues( "RadialMenu" );
-		m_resource->LoadFromFile( filesystem, "Resource/UI/Custom/RadialMenu.res" );
+		m_resource->LoadFromFile( filesystem, "resource/UI/RadialMenu.res" );
 	}
 
 	if ( m_menuData != data )
