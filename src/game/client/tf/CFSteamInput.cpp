@@ -66,7 +66,6 @@ CCFSteamInputManager::CCFSteamInputManager()
 	, onOskHidden_(this, &CCFSteamInputManager::OnOSKHidden)
 	, initialized_(false)
 	, currentSet_(ACTIONSET_NONE)
-	, gamepads_(new InputHandle_t[STEAM_INPUT_MAX_COUNT])
 	, gamepadsCount_(0)
 	, input_(nullptr) {
 }
@@ -97,7 +96,22 @@ bool CCFSteamInputManager::Init() {
 	// this must be called before GetControlledControllers
 	input_->RunFrame();
 
-	gamepadsCount_ = input_->GetConnectedControllers(gamepads_);
+	InputHandle_t temp[STEAM_INPUT_MAX_COUNT];
+	gamepadsCount_ = input_->GetConnectedControllers(temp);
+
+	for (int i = 0; i < gamepadsCount_; i++) {
+		gamepads_[i + 1] = temp[i];
+	}
+
+	for (int i = 0; i < ACTIONS_COUNT; i++) {
+		const char* pszActionName = pszActionsNames[i];
+		if (!pszActionName || pszActionName[0] == '\0') continue;
+
+		CFSTEAMINPUT_LOG_VERBOSE(1, "Registering action: \"%s\"...\n", pszActionName);
+
+		InputDigitalActionHandle_t hActionHandle = input_->GetDigitalActionHandle(pszActionName);
+		digitalActions_[hActionHandle] = false;
+	}
 
 	SetActionSet(ACTIONSET_MAINMENU);
 
@@ -128,7 +142,7 @@ void CCFSteamInputManager::Update(float) {
  * \brief Updates each action's state that were stored internally.
  */
 void CCFSteamInputManager::UpdateActionStates() {
-	for (int i = 0; i < gamepadsCount_; i++) {
+	for (int i = 1; i < gamepadsCount_; i++) {
 		InputHandle_t hGamepadHandle = gamepads_[i];
 
 		for (int j = 0; j < ACTIONS_COUNT; j++) {
@@ -141,6 +155,8 @@ void CCFSteamInputManager::UpdateActionStates() {
 			if (bCurrentState == bNewState) continue;
 			CFSTEAMINPUT_LOG_VERBOSE(1, "%s: state - %d > %d\n", pszActionName, bCurrentState, bNewState);
 			digitalActions_[hActionHandle] = bNewState;
+
+			OnCommand(pszActionName, bNewState);
 		}
 	}
 }
@@ -188,9 +204,9 @@ void CCFSteamInputManager::SetActionSet(CFInputActionSet_t iSet) {
 	}
 
 	InputActionSetHandle_t hSetHandle = input_->GetActionSetHandle(pszSetName);
-	for (int i = 0; i < gamepadsCount_; i++) {
+	for (int i = 1; i < gamepadsCount_; i++) {
 		InputHandle_t hGamepadHandle = gamepads_[i];
-		CFSTEAMINPUT_LOG_INFO("Applying action set for controller #%d...", i);
+		CFSTEAMINPUT_LOG_INFO("Applying action set for controller #%d...\n", i);
 		input_->ActivateActionSet(hGamepadHandle, hSetHandle);
 	}
 }
@@ -200,8 +216,8 @@ void CCFSteamInputManager::SetActionSet(CFInputActionSet_t iSet) {
  * \param iControllerIndex The number of the connected controller.
  */
 void CCFSteamInputManager::ShowBindingPanel(int iControllerIndex) {
-	if (iControllerIndex < gamepadsCount_ || iControllerIndex > gamepadsCount_) {
-		CFSTEAMINPUT_LOG_WARN("ShowBindingPanel has been called with an out of range argument!\n");
+	if (!IsControllerConnected(iControllerIndex)) {
+		CFSTEAMINPUT_LOG_WARN("ShowBindingPanel has been called with an invalid controller index!\n");
 		return;
 	}
 
@@ -220,9 +236,9 @@ static int CFSteamInputSettingsCompletion(char const* pszPartial, char pszComman
 		iSubStringLen = Q_strlen(pszSubString);
 	}
 
-	int iConnectedCount = SteamInputManager()->GetConnectedGamepadsCount();
+	int iConnectedCount = SteamInputManager()->GetConnectedControllersCount();
 
-	int i = 0;
+	int i = 1;
 	char pszIndexStr[25];
 	while (i <= iConnectedCount && iCurrent < COMMAND_COMPLETION_MAXITEMS)
 	{
@@ -267,6 +283,55 @@ CON_COMMAND_F_COMPLETION(
 	SteamInputManager()->ShowBindingPanel(iIndex);
 }
 
+/*! \fn CFControllerType_t CCFSteamInputManager::GetConnectedControllerType(int iControllerIndex) const
+ * \brief Gets the controller's type that is specified by index.
+ * \param iControllerIndex The number of the connected controller.
+ * \returns The type of controller that's been identified as.
+ */
+CFControllerType_t CCFSteamInputManager::GetConnectedControllerType(int iControllerIndex) const {
+	if (!IsControllerConnected(iControllerIndex)) {
+		CFSTEAMINPUT_LOG_WARN("GetConnectedControllerType was called with an invalid controller index!\n");
+		return CONTROLLER_NONE;
+	}
+
+	CFControllerType_t iReturnVal = CONTROLLER_NONE;
+
+	InputHandle_t hGamepadHandle = gamepads_[iControllerIndex];
+	ESteamInputType iInputType = input_->GetInputTypeForHandle(hGamepadHandle);
+	switch (iInputType)
+	{
+	case k_ESteamInputType_SteamController:
+		iReturnVal = CONTROLLER_STEAM;
+		break;
+	case k_ESteamInputType_XBox360Controller:
+		iReturnVal = CONTROLLER_XBOX360;
+		break;
+	case k_ESteamInputType_XBoxOneController:
+		iReturnVal = CONTROLLER_XBOXONE;
+		break;
+	case k_ESteamInputType_GenericGamepad:
+		iReturnVal = CONTROLLER_GENERIC;
+		break;
+	case k_ESteamInputType_PS4Controller:
+		iReturnVal = CONTROLLER_DUALSHOCK4;
+		break;
+	case k_ESteamInputType_PS5Controller:
+		iReturnVal = CONTROLLER_DUALSHOCK5;
+		break;
+	case k_ESteamInputType_SteamDeckController:
+		iReturnVal = CONTROLLER_DECK;
+		break;
+	case k_ESteamInputType_Unknown:
+		iReturnVal = CONTROLLER_UNKNOWN;
+		break;
+	default:
+		iReturnVal = CONTROLLER_UNSUPPORTED;
+		break;
+	}
+
+	return iReturnVal;
+}
+
 /*! \fn bool CCFSteamInputManager::IsControllerConnected(int iControllerIndex) const
  * \brief Determines whether this controller by index is currently connected or not.
  * \param iControllerIndex The number of the connected controller.
@@ -280,8 +345,18 @@ bool CCFSteamInputManager::IsControllerConnected(int iControllerIndex) const {
  * \brief Executes a command from \ref pszActionsNames.
  * \param pszCommand The value of the command string.
  */
-void CCFSteamInputManager::OnCommand(const char* pszCommand) {
-
+void CCFSteamInputManager::OnCommand(const char* pszCommand, bool bActive) {
+	if (!Q_stricmp(pszCommand, "PrimaryAttack")) {
+		if (bActive)
+			engine->ClientCmd_Unrestricted("+attack");
+		else
+			engine->ClientCmd_Unrestricted("-attack");
+	} else if (!Q_stricmp(pszCommand, "SecondaryAttack")) {
+		if (bActive)
+			engine->ClientCmd_Unrestricted("+attack2");
+		else
+			engine->ClientCmd_Unrestricted("-attack2");
+	}
 }
 
 /*! \fn void CCFSteamInputManager::OnOSKHidden(GamepadTextInputDismissed_t* param)

@@ -9,6 +9,29 @@
 #include <igamesystem.h>
 #include <steam/steam_api.h>
 
+// Okay I ended using std::map because CUtlMap is giving me a fucking brain aneurysm
+#include <map>
+
+/**
+ * \brief Types of controllers for Custom Fortress 2.
+ * \warning This must be in-sync with Steam Input's supported controllers.
+ */
+typedef enum CFControllerType_e {
+	CONTROLLER_UNKNOWN = -2,
+	CONTROLLER_UNSUPPORTED = -1,
+	CONTROLLER_NONE = 0,
+
+	CONTROLLER_STEAM,
+	CONTROLLER_DECK,
+	CONTROLLER_XBOX360,
+	CONTROLLER_XBOXONE,
+	CONTROLLER_DUALSHOCK4,
+	CONTROLLER_DUALSHOCK5,
+	CONTROLLER_GENERIC,
+
+	CONTROLLER_COUNT
+} CFControllerType_t;
+
 /**
  * \brief Types of Action Sets for Custom Fortress 2.
  * \warning This must be in-sync with Custom Fortress 2's IGA file.
@@ -63,10 +86,11 @@ public:
 	void				SetActionSet(CFInputActionSet_t iSet);
 	void				ShowBindingPanel(int iControllerIndex);
 
-	int					GetConnectedGamepadsCount() const { return gamepadsCount_; }
+	int					GetConnectedControllersCount() const { return gamepadsCount_; }
+	CFControllerType_t	GetConnectedControllerType(int iControllerIndex) const;
 	bool				IsControllerConnected(int iControllerIndex) const;
 
-	virtual void		OnCommand(const char* pszCommand);
+	virtual void		OnCommand(const char* pszCommand, bool bActive);
 
 protected:
 	virtual void		UpdateActionStates();
@@ -76,10 +100,10 @@ protected:
 private:
 	bool					initialized_;
 	CFInputActionSet_t		currentSet_;
-	InputHandle_t*			gamepads_;
+	InputHandle_t			gamepads_[STEAM_INPUT_MAX_COUNT+1];
 	int						gamepadsCount_;
 
-	CUtlMap<InputDigitalActionHandle_t, bool> digitalActions_;
+	std::map<InputDigitalActionHandle_t, bool> digitalActions_;
 
 	ISteamInput*			input_;
 };
