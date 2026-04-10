@@ -6250,10 +6250,6 @@ void C_TFPlayer::ClientThink()
 	}
 }
 
-void C_TFPlayer::UpdateTimers() {
-	m_Shared.SharedThink();
-}
-
 void C_TFPlayer::MVM_StartIdleSound(void)
 {
 	MVM_StopIdleSound();
@@ -6326,6 +6322,11 @@ void C_TFPlayer::MVM_StopIdleSound(void)
 		CSoundEnvelopeController::GetController().SoundDestroy(m_pGiantIdleSound);
 		m_pGiantIdleSound = NULL;
 	}
+}
+
+void C_TFPlayer::UpdateTimers( void )
+{
+	m_Shared.SharedThink();
 }
 
 void C_TFPlayer::Touch( CBaseEntity *pOther )
