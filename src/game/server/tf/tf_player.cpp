@@ -183,6 +183,7 @@ extern ConVar	halloween_starting_souls;
 extern ConVar tf_mvm_miniboss_scale;
 
 extern ConVar tf_powerup_mode_killcount_timer_length;
+extern ConVar cf_instantrespawn;
 
 float GetCurrentGravity( void );
 
@@ -14820,6 +14821,11 @@ void CTFPlayer::DropCurrencyPack( CurrencyRewards_t nSize /* = TF_CURRENCY_PACK_
 //-----------------------------------------------------------------------------
 void CTFPlayer::PlayerDeathThink( void )
 {
+	//If there's a better way... improve it.
+	if ( cf_instantrespawn.GetBool() )
+    {
+        ForceRespawn(); 
+    }
 	// We're doing this here to avoid getting stuck
 	// in a recursive loop if we do it in Event_Killed
 	if ( m_bPendingMerasmusPlayerBombExplode )

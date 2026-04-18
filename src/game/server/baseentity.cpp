@@ -2300,6 +2300,9 @@ BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities"
 	DEFINE_SCRIPTFUNC_NAMED( entindex, "GetEntityIndex", "" )
 
 	DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheModel, "PrecacheModel", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheModelWithGibs, "PrecacheModelWithGibs", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheMaterial, "PrecacheMaterial", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheParticleSystem, "PrecacheParticleSystem", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheScriptSound, "PrecacheScriptSound", "" )
 	// dota had a SetModel here too, but i dont think we need it
 
@@ -2465,14 +2468,19 @@ BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities"
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetSolid, "GetSolid", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptSetSolid, "SetSolid", "" )
 	
-	DEFINE_SCRIPTFUNC_NAMED( ScriptMakePhysics, "MakePhysics", "Give the entity Physics" )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptDestroyPhysics, "DestroyPhysics", "Remove the entity Physics" )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptSetMass, "SetMass", "Set the entity's Mass" )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptGetMass, "GetMass", "Get the entity's Mass" )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptSetBuoyancyRatio, "SetBuoyancyRatio", "Set the entity's Bouyancy, 0 = sink, 1 = float" )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptSetElasticity, "SetElasticity", "Set the entity's Elasticity" )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptGetElasticity, "GetElasticity", "Get the entity's Elasticity" )
-	DEFINE_SCRIPTFUNC_NAMED( ScriptToggleCollisionsOn, "ToggleCollisionsOn", "Toggle Collisions between 2 entities" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptCreatePhysics, "CreatePhysics", "Create the entity Physics." )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptDestroyPhysics, "DestroyPhysics", "Destroy the entity Physics." )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptHasPhysics, "HasPhysics", "Do we have Physics?")
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetSurfaceProperty, "GetSurfaceProperty", "Get the surface property id of the Physics Object.")
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetSurfacePropertyName, "GetSurfacePropertyName", "Get the surface property id by name on the Physics Object.")
+	DEFINE_SCRIPTFUNC_NAMED( ScriptSetSurfaceProperty, "SetSurfaceProperty", "Set a surface property id of the Physics Object.")
+	DEFINE_SCRIPTFUNC_NAMED( ScriptSetSurfacePropertyByName, "SetSurfacePropertyByName", "Set a surface property id by name on the Physics Object.")
+	DEFINE_SCRIPTFUNC_NAMED( ScriptSetMass, "SetMass", "Set the entity's Mass." )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetMass, "GetMass", "Get the entity's Mass." )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptSetBuoyancy, "SetBuoyancy", "Set the entity's Bouyancy, 0-1 ratio." )
+	DEFINE_SCRIPTFUNC_NAMED( SetElasticity, "SetElasticity", "Set the entity's Elasticity." )
+	DEFINE_SCRIPTFUNC_NAMED( GetElasticity,	"GetElasticity", "Get the entity's Elasticity." )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptToggleCollisionsOn, "ToggleCollisionsOn", "Toggle Collisions between two physical entities." )
 
 	DEFINE_SCRIPTFUNC( TerminateScriptScope, "Clear the current script scope for this entity" )
 
@@ -5670,6 +5678,36 @@ HSCRIPT CBaseEntity::ScriptGetModelKeyValues( void )
 void CBaseEntity::ScriptPrecacheModel( const char *name )
 {
 	PrecacheModel( name );
+}
+
+//------------------------------------------------------------------------------
+// Purpose :
+// Input   :
+// Output  :
+//------------------------------------------------------------------------------
+void CBaseEntity::ScriptPrecacheModelWithGibs( const char *name )
+{
+	int iModel = PrecacheModel( name );
+	PrecacheGibsForModel( iModel );
+	PrecacheModel( name );
+}
+//------------------------------------------------------------------------------
+// Purpose :
+// Input   :
+// Output  :
+//------------------------------------------------------------------------------
+void CBaseEntity::ScriptPrecacheMaterial( const char *name )
+{
+	PrecacheMaterial( name );
+}
+//------------------------------------------------------------------------------
+// Purpose :
+// Input   :
+// Output  :
+//------------------------------------------------------------------------------
+void CBaseEntity::ScriptPrecacheParticleSystem( const char *name )
+{
+	PrecacheParticleSystem( name );
 }
 
 //------------------------------------------------------------------------------

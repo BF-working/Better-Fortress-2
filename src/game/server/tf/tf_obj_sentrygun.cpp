@@ -1002,7 +1002,6 @@ bool CObjectSentrygun::FindTarget()
 
 		if ( pTargetCurrent == NULL )
 		{
-			// Search for generic entities that are marked as TFFLAG_TARGETABLE
 			CBaseEntity *pEnt = NULL;
 			for ( CEntitySphereQuery sphere( vecSentryOrigin, m_flSentryRange ); ( pEnt = sphere.GetCurrentEntity() ) != NULL; sphere.NextEntity() )
 			{
@@ -1014,7 +1013,7 @@ bool CObjectSentrygun::FindTarget()
 				if ( bIsTargetable )
 				{
 					// Only target enemies
-					if ( pEnt->GetTeamNumber() == iEnemyTeam || pEnt->GetTeamNumber() == TEAM_ANY )
+					if ( pEnt->GetTeamNumber() != GetTeamNumber() )
 					{
 						vecTargetCenter = pEnt->GetAbsOrigin() + pEnt->GetViewOffset();
 						VectorSubtract( vecTargetCenter, vecSentryOrigin, vecSegment );

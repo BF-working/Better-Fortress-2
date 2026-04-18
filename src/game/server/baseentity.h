@@ -26,6 +26,7 @@
 class IPhysicsObject;
 void PhysDisableEntityCollisions( IPhysicsObject *pObject0, IPhysicsObject *pObject1 );
 void PhysEnableEntityCollisions( IPhysicsObject *pObject0, IPhysicsObject *pObject1 );
+extern IPhysicsSurfaceProps *physprops;
 
 class CDamageModifier;
 class CDmgAccumulator;
@@ -1357,7 +1358,7 @@ public:
 		return (int)GetSolid();
 	}
 
-	void ScriptMakePhysics( int nSolidType, int nSolidFlags, bool asleep ) 
+	void ScriptCreatePhysics( int nSolidType, int nSolidFlags, bool asleep ) 
 	{ 
 		VPhysicsInitNormal( (SolidType_t) nSolidType, nSolidFlags, asleep ); 
 	}
@@ -1367,14 +1368,68 @@ public:
 		VPhysicsDestroyObject(); 
 	}
 
+	bool ScriptHasPhysics( void )
+	{
+		if ( VPhysicsGetObject() )
+			return true;
+
+		return false;
+	}
+
+	int ScriptGetSurfaceProperty( void ) const
+	{
+		IPhysicsObject * vPhys = VPhysicsGetObject();
+		if ( vPhys )
+		{
+			return vPhys->GetMaterialIndex();
+		}
+		else
+		{
+			Log_Warning( LOG_VScript, "Entity (%s) has no VPhysics, make sure it does, or use the CreatePhysics function\n" );
+			return -1;
+		}
+	}
+
+	const char* ScriptGetSurfacePropertyName( int nIndex ) const
+	{
+		if ( !physprops )
+			return "default";
+
+		return physprops->GetPropName( nIndex );
+	}
+
+	void ScriptSetSurfaceProperty( int materialIndex )
+	{
+		IPhysicsObject * vPhys = VPhysicsGetObject();
+		if ( vPhys )
+		{
+			vPhys->SetMaterialIndex( materialIndex );
+		}
+		else
+		{
+			Log_Warning( LOG_VScript, "Entity (%s) has no VPhysics, make sure it does, or use the CreatePhysics function\n", GetDebugName() );
+		} 
+	}
+	void ScriptSetSurfacePropertyByName( const char *name )
+	{
+		IPhysicsObject * vPhys = VPhysicsGetObject();
+		if ( vPhys )
+		{
+			vPhys->SetMaterialIndex( physprops->GetSurfaceIndex( name ) );
+		}
+		else
+		{
+			Log_Warning( LOG_VScript, "Entity (%s) has no VPhysics, make sure it does, or use the CreatePhysics function\n", GetDebugName() );
+		} 
+	}
+
 	void ScriptToggleCollisionsOn( HSCRIPT pEntity, bool bEnable )
 	{
 		IPhysicsObject * vPhysObj1 = VPhysicsGetObject();
-		// need two different objects to do anything
 
 		CBaseEntity *hTarget = ToEnt( pEntity );
 		IPhysicsObject* vPhysObj2 = hTarget->VPhysicsGetObject();
-		//Invalid Target
+
 		if ( !vPhysObj2 && !vPhysObj1 )
 			return;
 
@@ -1401,10 +1456,10 @@ public:
 		}
 		else
 		{
-			Log_Warning( LOG_VScript, "Entity has no Physics, use MakePhysics function\n" );
+			Log_Warning( LOG_VScript, "Entity (%s) has no VPhysics, make sure it does, or use the CreatePhysics function\n", GetDebugName() );
 		} 
 	}
-	
+
 
 	float ScriptGetMass( void ) const
 	{ 
@@ -1415,13 +1470,13 @@ public:
 		}
 		else
 		{
-			Log_Warning( LOG_VScript, "Entity has no Physics, use MakePhysics function\n" );
+			Log_Warning( LOG_VScript, "Entity (%s) has no VPhysics, make sure it does, or use the CreatePhysics function\n" );
 			return -1;
 		} 
 	}
-	
 
-	void ScriptSetBuoyancyRatio( float flBuoyancy )
+
+	void ScriptSetBuoyancy( float flBuoyancy )
 	{ 
 		IPhysicsObject *vPhys = VPhysicsGetObject();
 		if ( vPhys )
@@ -1430,20 +1485,40 @@ public:
 		}
 		else
 		{
-			Log_Warning( LOG_VScript, "Entity has no Physics, use MakePhysics function\n" );
+			Log_Warning( LOG_VScript, "Entity (%s) has no VPhysics, make sure it does, or use the CreatePhysics function\n", GetDebugName() );
 		} 
 	}
 
-
-	void ScriptSetElasticity( float flElasticity ) 
-	{ 
-		SetElasticity( flElasticity );
+	void ScriptSetPhysicsFlag( int PhysFlag )
+	{
+		IPhysicsObject * vPhys = VPhysicsGetObject();
+		if ( vPhys )
+		{ 
+			unsigned short flags = vPhys->GetGameFlags();
+			flags |= PhysFlag;
+			vPhys->SetGameFlags( flags );
+		}
 	}
 
-
-	float ScriptGetElasticity (void ) const
+	void ScriptRemovePhysicsFlag( int PhysFlag )
 	{
-		return m_flElasticity; 
+		IPhysicsObject * vPhys = VPhysicsGetObject();
+		if ( vPhys )
+		{ 
+			unsigned short flags = vPhys->GetGameFlags();
+			flags &= ~PhysFlag;
+			vPhys->SetGameFlags( flags );
+		}
+	}
+
+	bool ScriptHasPhysicsFlag( int PhysFlag ) const
+	{
+		IPhysicsObject *vPhys = VPhysicsGetObject();
+		if ( vPhys )
+		{
+			return ( vPhys->GetGameFlags() & PhysFlag ) != 0;
+		}
+		return false;
 	}
 
 	//TF2 Specific
@@ -1468,6 +1543,9 @@ public:
 	HSCRIPT ScriptGetModelKeyValues( void );
 
 	void ScriptPrecacheModel( const char *name );
+	void ScriptPrecacheModelWithGibs( const char *name );
+	void ScriptPrecacheMaterial( const char *name );
+	void ScriptPrecacheParticleSystem( const char *name );
 	void ScriptPrecacheScriptSound( const char *name );
 
 	bool ScriptAcceptInput( const char *pInputName, const char *pValue, HSCRIPT hActivator, HSCRIPT hCaller );
