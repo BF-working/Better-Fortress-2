@@ -40,7 +40,6 @@ const char *g_szEquipSlotHeader[] =
 	"#ItemSel_MISC",		// LOADOUT_POSITION_HEAD
 	"#ItemSel_MISC",		// LOADOUT_POSITION_MISC
 	"#ItemSel_ACTION",		// LOADOUT_POSITION_ACTION
-	"#ItemSel_SKIN",		// LOADOUT_POSITION_SKIN
 	"#ItemSel_MISC",		// LOADOUT_POSITION_MISC2
 	"#ItemSel_TAUNT",		// LOADOUT_POSITION_TAUNT
 	"#ItemSel_TAUNT",		// LOADOUT_POSITION_TAUNT2
@@ -50,6 +49,7 @@ const char *g_szEquipSlotHeader[] =
 	"#ItemSel_TAUNT",		// LOADOUT_POSITION_TAUNT6
 	"#ItemSel_TAUNT",		// LOADOUT_POSITION_TAUNT7
 	"#ItemSel_TAUNT",		// LOADOUT_POSITION_TAUNT8
+	"#ItemSel_SKIN",		// LOADOUT_POSITION_SKIN
 	"#ItemSel_UTILITY",		// LOADOUT_POSITION_THROWABLE
 	"#ItemSel_UTILITY",		// LOADOUT_POSITION_THROWABLE2
 	"#ItemSel_UTILITY",		// LOADOUT_POSITION_THROWABLE3
@@ -465,9 +465,10 @@ void CItemSelectionPanel::OnKeyCodePressed( vgui::KeyCode code )
 			NotifySelectionReturned( pItemPanel );
 		}
 	}
-	else if( nButtonCode == KEY_XBUTTON_B )
+	else if( nButtonCode == KEY_XBUTTON_B || nButtonCode == STEAMCONTROLLER_B )
 	{
-		PostMessageSelectionReturned( INVALID_ITEM_ID );
+		//match the same behaviour as pressing ESC
+		PostMessageSelectionReturned( 0 );
 		OnClose();
 	}
 	else
@@ -1176,8 +1177,9 @@ void CEquipSlotItemSelectionPanel::UpdateModelPanelsForSelection( void )
 	int nPageStart = GetCurrentPage() * GetNumSlotsPerPage();
 	nOldSelection += nPageStart;
 
-	static ConVarRef joystick( "joystick" );
-	if ( joystick.IsValid() && joystick.GetBool() )
+	//static ConVarRef joystick( "joystick" );
+	bool bSteamController = ::input->IsSteamControllerActive();
+	if ( bSteamController )
 	{
 		if( nOldSelection == -1 || nOldSelection >= vecDisplayItems.Count() )
 			nOldSelection = nPageStart;
@@ -1193,7 +1195,7 @@ void CEquipSlotItemSelectionPanel::UpdateModelPanelsForSelection( void )
 		m_pItemModelPanels[i]->SetShowGreyedOutTooltip( true );
 		m_pItemModelPanels[i]->SetGreyedOut( NULL );
 		m_pItemModelPanels[i]->SetNoItemText( "#SelectNoItemSlot" );
-		bool bSelected = joystick.IsValid() && joystick.GetBool() && iItemIndex == nOldSelection;
+		bool bSelected = bSteamController && iItemIndex == nOldSelection;
 		m_pItemModelPanels[i]->SetSelected( bSelected );
 		m_pItemModelPanels[i]->SetShowQuantity( true );
 		m_pItemModelPanels[i]->SetForceShowEquipped( false );
