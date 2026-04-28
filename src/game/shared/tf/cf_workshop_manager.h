@@ -239,7 +239,7 @@ struct CFWorkshopTagInfo_t
 // Global array of workshop tag info
 extern const CFWorkshopTagInfo_t g_CFWorkshopTags[CF_WORKSHOP_TAG_COUNT];
 
-#define CFWorkshopMsg(...) Msg("[CF Workshop] " __VA_ARGS__)
+#define CFWorkshopMsg(...) ConColorMsg(Color(0,50,255,255), "[CF Workshop] " __VA_ARGS__)
 #define CFWorkshopWarning(...) Warning("[CF Workshop] " __VA_ARGS__)
 
 #ifdef CF_WORKSHOP_DEBUG
