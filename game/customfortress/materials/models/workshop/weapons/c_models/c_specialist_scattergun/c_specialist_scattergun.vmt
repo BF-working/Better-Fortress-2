@@ -1,23 +1,24 @@
 "VertexlitGeneric"
 {
-	"$baseTexture" "models\weapons\c_items/c_big_tex"
-	
-	"$phong" "1"
-	"$phongexponent" "25"
-	"$phongboost" "2"	
-	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
-	"$phongfresnelranges"	"[.25 .5 1]"
+	"$baseTexture" "models\workshop\weapons\c_models\c_specialist_scattergun/c_specialist_scattergun"
 
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.05 .05 .05]"
+
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "15"	
+	"$lightwarptexture" "models\weapons\c_items/c_ambassador_lightwarp"
+	"$phongfresnelranges"	"[.25 .25 .25]"
 	"$basemapalphaphongmask" "1"
 
 	"$rimlight" "1"
-	"$rimlightexponent" "4"	
-	"$rimlightboost" "1"
+	"$rimlightexponent" "1"	
+	"$rimlightboost" ".5"
 
+	"$yellow" "0"
 	"$glowcolor" "1"
 
-	// Cloaking
-	"$cloakPassEnabled" "1"
 	"$sheenPassEnabled" "1"
 
 	"$sheenmap" 		"cubemaps\cubemap_sheen001"
@@ -26,8 +27,8 @@
 	"$sheenmapmaskframe" 	"0"
 	"$sheenindex" 		"0"
 
-	"$yellow" "0"
-
+	// Cloaking
+	"$cloakPassEnabled" "1"
 	"Proxies"
 	{
 		"AnimatedWeaponSheen"
@@ -39,14 +40,13 @@
 		"invis"
 		{
 		}
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
 		"ModelGlowColor"
 		{
 			"resultVar" "$glowcolor"
-		}
-		"Equals"
-		{
-			"srcVar1"  "$glowcolor"
-			"resultVar" "$selfillumtint"
 		}
 		"Equals"
 		{
@@ -65,3 +65,4 @@
 		}
 	}
 }
+

@@ -12183,19 +12183,37 @@ int CTFPlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 		}
 
 		// For lifeleech, calculate how much damage we actually inflicted.
-		if ( pTFAttacker && pTFAttacker->GetActiveWeapon() )
+		if ( pTFAttacker && pTFAttacker->GetActiveWeapon() && pTFAttacker != this)
 		{
 			float fLifeleechOnDamage = 0.0f;
+			float fLifeleechOnDamage_w = 0.0f;
+			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pTFAttacker, fLifeleechOnDamage_w, lifeleech_on_damage_w );
 			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pTFAttacker->GetActiveWeapon(), fLifeleechOnDamage, lifeleech_on_damage );
-			if ( fLifeleechOnDamage > 0.0f )
+			if ( fLifeleechOnDamage > 0.0f || fLifeleechOnDamage_w > 0.0f)
 			{
 				const float fActualDamageDealt = iOldHealth - m_iHealth;
-				const float fHealAmount = fActualDamageDealt * fLifeleechOnDamage;
+				const float fHealAmount = clamp( fActualDamageDealt, 0, iOldHealth * 1.25f + 20.0f) * ( fLifeleechOnDamage + fLifeleechOnDamage_w );
 
 				if ( fHealAmount >= 0.5f )
 				{
-					const int iHealthToAdd = MIN( (int)(fHealAmount + 0.5f), pTFAttacker->m_Shared.GetMaxBuffedHealth() - pTFAttacker->GetHealth() );
+					const int iHealthToAdd = MIN( (int)(fHealAmount + 0.5f), pTFAttacker->m_Shared.GetMaxBuffedHealth() - pTFAttacker->GetHealth());
 					pTFAttacker->TakeHealth( iHealthToAdd, DMG_GENERIC );
+
+					CTF_GameStats.Event_PlayerHealedOther(pTFAttacker, iHealthToAdd);
+
+					IGameEvent* event = gameeventmanager->CreateEvent("player_healonhit");
+					if (event)
+					{
+						event->SetInt("amount", iHealthToAdd);
+						event->SetInt("entindex", pTFAttacker->entindex());
+						item_definition_index_t healingItemDef = INVALID_ITEM_DEF_INDEX;
+						if (GetAttributeContainer() && GetAttributeContainer()->GetItem())
+						{
+							healingItemDef = GetAttributeContainer()->GetItem()->GetItemDefIndex();
+						}
+						event->SetInt("weapon_def_index", healingItemDef);
+						gameeventmanager->FireEvent(event);
+					}
 				}
 			}
 		}

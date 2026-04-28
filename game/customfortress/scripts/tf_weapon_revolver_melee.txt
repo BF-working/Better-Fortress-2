@@ -4,7 +4,7 @@ WeaponData
 	"printname"		"#TF_Weapon_Revolver"
 	"BuiltRightHanded"	"0"
 	"weight"		"3"
-	"WeaponType"		"secondary"
+	"WeaponType"		"melee"
 	"ITEM_FLAG_NOITEMPICKUP" 	"1"
 		
 	// Attributes TF.
@@ -21,7 +21,7 @@ WeaponData
 
 
 	// Ammo & Clip.
-	"primary_ammo"		"TF_AMMO_SECONDARY"
+	"primary_ammo"		"TF_AMMO_PRIMARY"
 	"secondary_ammo"	"None"
 	clip_size			6
 	default_clip		6
