@@ -1297,7 +1297,7 @@ bool CWeaponMedigun::FindAndHealTargets( void )
 	}
 
 	CBaseEntity *pNewTarget = m_hHealingTarget;
-	if ( pNewTarget && pNewTarget->IsAlive() )
+	if ( pNewTarget && ( pNewTarget->IsAlive() || pNewTarget->m_nTFFlags & TFFLAG_MEDIGUN_CAN_HEAL ) )
 	{
 		CTFPlayer *pTFPlayer = ToTFPlayer( pNewTarget );
 
