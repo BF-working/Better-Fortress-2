@@ -988,6 +988,7 @@ enum taunt_attack_t
 	TAUNTATK_HEAVY_PUNCHOUT_B,
 	TAUNTATK_HEAVY_PUNCHOUT_C,
 	TAUNTATK_HEAVY_PUNCHOUT_KILL,
+	TAUNTATK_PYRO_ECON_EXTINGUISHER,
 	// END OF BF2 SPECIFiC TAUNTATK
 	// 
 	//
@@ -1353,9 +1354,10 @@ enum
 	TFFLAG_OBSERVABLE						= 1<<6,		//Adds the entity to the observable list, giving the 360 view, like bosses.
 	TFFLAG_SUPPORTS_ENGINEER_BUILDINGS		= 1<<7,		//Allows Engineers to build on top of it.
 	TFFLAG_AIRBLASTABLE						= 1<<8,		//Pyro can now airblast this object, just like the beachball.
-	TFFLAG_CAN_BE_STUNNED					= 1<<9,		//The Sandman's ball will be able to stun this.
-	TFFLAG_CAN_BE_DRENCHED					= 1<<10,	//Jars will be able to drench the entity.
-	TFFLAG_REMOVES_PROJECTILES				= 1<<11,	//Kills projectiles, and sends the event when doing so.
+	TFFLAG_SHOWS_TARGETID					= 1<<9,		//Displays the info box.
+	TFFLAG_CAN_BE_STUNNED					= 1<<10,	//The Sandman's ball will be able to stun this.
+	TFFLAG_CAN_BE_DRENCHED					= 1<<11,	//Jars will be able to drench the entity.
+	TFFLAG_REMOVES_PROJECTILES				= 1<<12,	//Kills projectiles, and sends the event when doing so.
 };
 
 enum
