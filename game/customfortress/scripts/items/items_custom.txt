@@ -1477,6 +1477,17 @@
 				"engineer"		"1"
 			}
 		}
+		//Taunts
+		// Pyro - Friendly Fire (Extinguisher)
+		"31605"
+		{
+			"static_attrs"
+			{
+				"taunt attack name"		"TAUNTATK_PYRO_ECON_EXTINGUISHER"
+				"taunt attack time"		"1.76"
+			}
+		}
+		
 		//ALL-CLASS OVERRIDES
 		"264" //Frying Pan
 		{
