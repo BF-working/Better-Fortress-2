@@ -2495,6 +2495,7 @@ void CWeaponMedigun::UpdateEffects( void )
 			return;
 
 		bool bReviveMarker = m_hReviveMarker && m_hReviveMarker == m_hHealingTarget;	// Hack to avoid another dynamic_cast here
+		bool bCanBeHealed = m_hHealingTarget->m_nTFFlags & TFFLAG_MEDIGUN_CAN_HEAL;
 		bool bHealTargetMarker = hud_medichealtargetmarker.GetBool() && !bReviveMarker;
 
 		const char *pszEffectName;
@@ -2540,9 +2541,10 @@ void CWeaponMedigun::UpdateEffects( void )
 		}
 
 		// Attach differently if targeting a revive marker
-		float flVecHeightOffset = bReviveMarker ? 0.f : 50.f;
-		ParticleAttachment_t attachType = bReviveMarker ? PATTACH_POINT_FOLLOW : PATTACH_ABSORIGIN_FOLLOW;
-		const char *pszAttachName = bReviveMarker ? "healbeam" : NULL;
+		bool bShouldUseAttachment = bCanBeHealed || bReviveMarker;
+		float flVecHeightOffset = bShouldUseAttachment ? 0.f : 50.f;
+		ParticleAttachment_t attachType = bShouldUseAttachment ? PATTACH_POINT_FOLLOW : PATTACH_ABSORIGIN_FOLLOW;
+		const char *pszAttachName = bShouldUseAttachment ? "healbeam" : NULL;
 
 		CNewParticleEffect *pEffect = pEffectOwner->ParticleProp()->Create( pszEffectName, PATTACH_POINT_FOLLOW, "muzzle" );
 		pEffectOwner->ParticleProp()->AddControlPoint( pEffect, 1, m_hHealingTarget, attachType, pszAttachName, Vector(0.f,0.f,flVecHeightOffset) );

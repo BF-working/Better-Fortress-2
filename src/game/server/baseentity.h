@@ -863,6 +863,7 @@ public:
 	
 #ifdef TF_DLL
 	CNetworkArray( int, m_nModelIndexOverrides, MAX_VISION_MODES ); // used to override the base model index on the client if necessary
+	CNetworkVarForDerived(int, m_nTFFlags);
 #endif
 
 	CNetworkVar( bool, m_bIgnoreTurboPhysics);  //Ignores sv_turbophysics and computes normally.
@@ -1258,11 +1259,6 @@ public:
 
 	CNetworkVarForDerived( char, m_lifeState );
 	CNetworkVarForDerived( char , m_takedamage );
-
-#ifdef TF_DLL
-	CNetworkVarForDerived(int, m_nTFFlags);
-#endif 
-
 
 	// Damage filtering
 	string_t	m_iszDamageFilterName;	// The name of the entity to use as our damage filter.
