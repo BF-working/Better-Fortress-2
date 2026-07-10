@@ -20249,6 +20249,39 @@ void CTFPlayer::HandleTauntCommand( int iTauntSlot )
 		{
 			Taunt( TAUNT_BASE_WEAPON );
 		}
+
+		//Custom Fortress - Detect Taunting
+
+
+		IGameEvent* pEvent = gameeventmanager->CreateEvent("cf_player_taunt");
+		if (pEvent)
+		{
+			pEvent->SetInt("taunter", GetUserID());
+
+			CEconItemView* TauntID = GetEquippedItemForLoadoutSlot(iTauntSlot);
+			int TauntIndex = -1;
+            if (TauntID && TauntID->GetItemDefinition())
+            {  
+				TauntIndex = TauntID->GetItemDefinition()->GetDefinitionIndex();
+            }
+			pEvent->SetInt("taunter_tauntID", TauntIndex ? TauntIndex : -1 );
+			pEvent->SetInt("attack_name", TauntIndex ? m_iTauntAttack : TAUNTATK_NONE);
+
+			//We have a partner taunt, so we need to send the partner's taunt ID as well
+			CTFPlayer* Partner = FindPartnerTauntInitiator();
+			int PartnerTauntID = -1;
+			if ( Partner ) 
+			{
+				const GameItemDefinition_t* pPartnerTauntID = Partner->m_TauntEconItemView.GetItemDefinition();
+				if ( pPartnerTauntID )
+				{
+					PartnerTauntID = pPartnerTauntID->GetDefinitionIndex();
+				}
+			}
+			pEvent->SetInt("partner", Partner ? Partner->GetUserID() : -1 );
+			pEvent->SetInt("partner_tauntID", PartnerTauntID ? PartnerTauntID : -1 );
+			gameeventmanager->FireEvent(pEvent);
+		}
 	}
 }
 
@@ -21150,20 +21183,45 @@ void CTFPlayer::DoTauntAttack( void )
 				if (FVisible(pList[i], MASK_SOLID) == false)
 					continue;
 
+				CTFPlayer * pAffectedPlayers = ToTFPlayer(pList[i]);
 				//Extinguish our friends, push back our enemies.
-				if (pList[i]->GetTeamNumber() == GetTeamNumber())
+				if (pAffectedPlayers->GetTeamNumber() == GetTeamNumber())
 				{
 					//Ignore non burning teammates
-					if (!ToTFPlayer(pList[i])->m_Shared.InCond(TF_COND_BURNING))
+					if (!pAffectedPlayers->m_Shared.InCond(TF_COND_BURNING))
 						return;
 
 					Vector vecPos = WorldSpaceCenter();
-					vecPos += (pList[i]->WorldSpaceCenter() - vecPos) * 0.75;
+					vecPos += (pAffectedPlayers->WorldSpaceCenter() - vecPos) * 0.75;
 
 					//Offset angle to match left hook.
 					AngleVectors(QAngle(-45, m_angEyeAngles[YAW] - 35, 0), &vecForward);
-					ToTFPlayer(pList[i])->m_Shared.RemoveCond(TF_COND_BURNING);
-					pList[i]->EmitSound("TFPlayer.FlameOut");
+					pAffectedPlayers->m_Shared.RemoveCond(TF_COND_BURNING);
+					pAffectedPlayers->EmitSound("TFPlayer.FlameOut");
+					
+					//Same rules from the Flamethrower
+					if (ShouldGetBonusPointsForExtinguishEvent(pAffectedPlayers->GetUserID()))
+					{
+						CTF_GameStats.Event_PlayerAwardBonusPoints(this, pAffectedPlayers, 10);
+					}
+
+					CRecipientFilter involved_filter;
+					involved_filter.AddRecipient(this);
+					involved_filter.AddRecipient(pAffectedPlayers);
+
+					UserMessageBegin(involved_filter, "PlayerExtinguished");
+					WRITE_BYTE(entindex());
+					WRITE_BYTE(pAffectedPlayers->entindex());
+					MessageEnd();
+
+					IGameEvent* event = gameeventmanager->CreateEvent("player_extinguished");
+					if (event)
+					{
+						event->SetInt("victim", pAffectedPlayers->entindex());
+						event->SetInt("healer", entindex());
+
+						gameeventmanager->FireEvent(event, true);
+					}			
 				}
 				else
 				{
