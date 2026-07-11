@@ -20167,11 +20167,50 @@ void CTFPlayer::HandleTauntCommand( int iTauntSlot )
 		return;
 
 	m_nActiveTauntSlot = LOADOUT_POSITION_INVALID;
+
+
+
+	
+
 	if ( iTauntSlot > 0 && iTauntSlot <= 8 )
 	{
 		m_nActiveTauntSlot = LOADOUT_POSITION_TAUNT + iTauntSlot - 1;
 		CEconItemView* pItem = GetEquippedItemForLoadoutSlot( m_nActiveTauntSlot );
-		PlayTauntSceneFromItem( pItem );
+		bool bPlayedTaunt = PlayTauntSceneFromItem( pItem );
+
+		//Custom Fortress - Detect Taunting
+
+		IGameEvent* pEvent = gameeventmanager->CreateEvent("cf_player_taunt");
+
+		if ( bPlayedTaunt && pEvent )
+		{
+			pEvent->SetInt("taunter", GetUserID());
+
+			CEconItemView* TauntID = GetEquippedItemForLoadoutSlot(iTauntSlot);
+			int TauntIndex = -1;
+			if ( TauntID && TauntID->GetItemDefinition() )
+			{
+				TauntIndex = TauntID->GetItemDefinition()->GetDefinitionIndex();
+			}
+			pEvent->SetInt("taunter_tauntID", TauntIndex ? TauntIndex : -1);
+			pEvent->SetInt("attack_name", TauntIndex ? m_iTauntAttack : TAUNTATK_NONE);
+
+			//We have a partner taunt, so we need to send the partner's taunt ID as well
+			CTFPlayer* Partner = FindPartnerTauntInitiator();
+			int PartnerTauntID = -1;
+			if (Partner)
+			{
+				const GameItemDefinition_t* pPartnerTauntID = Partner->m_TauntEconItemView.GetItemDefinition();
+				if (pPartnerTauntID)
+				{
+					PartnerTauntID = pPartnerTauntID->GetDefinitionIndex();
+				}
+			}
+			pEvent->SetInt("partner", Partner ? Partner->GetUserID() : -1);
+			pEvent->SetInt("partner_tauntID", PartnerTauntID ? PartnerTauntID : -1);
+			gameeventmanager->FireEvent(pEvent);
+		}
+
 		return;
 	}
 	else
@@ -20242,45 +20281,25 @@ void CTFPlayer::HandleTauntCommand( int iTauntSlot )
 
 		if ( pTauntItem && pTauntItem->IsValid() && PlayTauntSceneFromItem( pTauntItem ) )
 		{
-			// taunts played from item
 			return;
 		}
 		else
 		{
-			Taunt( TAUNT_BASE_WEAPON );
-		}
+			//Custom Fortress - Detect Taunting
 
-		//Custom Fortress - Detect Taunting
+			IGameEvent* pEvent = gameeventmanager->CreateEvent("cf_player_taunt");
 
-
-		IGameEvent* pEvent = gameeventmanager->CreateEvent("cf_player_taunt");
-		if (pEvent)
-		{
-			pEvent->SetInt("taunter", GetUserID());
-
-			CEconItemView* TauntID = GetEquippedItemForLoadoutSlot(iTauntSlot);
-			int TauntIndex = -1;
-            if (TauntID && TauntID->GetItemDefinition())
-            {  
-				TauntIndex = TauntID->GetItemDefinition()->GetDefinitionIndex();
-            }
-			pEvent->SetInt("taunter_tauntID", TauntIndex ? TauntIndex : -1 );
-			pEvent->SetInt("attack_name", TauntIndex ? m_iTauntAttack : TAUNTATK_NONE);
-
-			//We have a partner taunt, so we need to send the partner's taunt ID as well
-			CTFPlayer* Partner = FindPartnerTauntInitiator();
-			int PartnerTauntID = -1;
-			if ( Partner ) 
+			if ( pEvent )
 			{
-				const GameItemDefinition_t* pPartnerTauntID = Partner->m_TauntEconItemView.GetItemDefinition();
-				if ( pPartnerTauntID )
-				{
-					PartnerTauntID = pPartnerTauntID->GetDefinitionIndex();
-				}
+				pEvent->SetInt("taunter", GetUserID());
+				pEvent->SetInt("taunter_tauntID", -1);
+				pEvent->SetInt("attack_name", TAUNTATK_NONE);
+
+				pEvent->SetInt("partner", -1);
+				pEvent->SetInt("partner_tauntID", -1);
+				gameeventmanager->FireEvent(pEvent);
 			}
-			pEvent->SetInt("partner", Partner ? Partner->GetUserID() : -1 );
-			pEvent->SetInt("partner_tauntID", PartnerTauntID ? PartnerTauntID : -1 );
-			gameeventmanager->FireEvent(pEvent);
+			Taunt( TAUNT_BASE_WEAPON );
 		}
 	}
 }

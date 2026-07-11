@@ -3335,6 +3335,7 @@ CTFGameRules::CTFGameRules()
 	ListenForGameEvent( "player_disconnect" );
 	ListenForGameEvent( "teamplay_setup_finished" );
 	ListenForGameEvent( "recalculate_truce" );
+	ListenForGameEvent( "cf_player_taunt" );
 
 	Q_memset( m_vecPlayerPositions,0, sizeof(m_vecPlayerPositions) );
 
