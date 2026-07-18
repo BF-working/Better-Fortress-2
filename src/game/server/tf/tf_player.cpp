@@ -20780,7 +20780,7 @@ void CTFPlayer::DoTauntAttack( void )
 			SpawnClientsideFlyingBird( vecPos );
 		}
 	}
-	else if ( iTauntAttack == TAUNTATK_PYRO_ARMAGEDDON )
+	else if ( iTauntAttack == TAUNTATK_PYRO_ARMAGEDDON || iTauntAttack == TAUNTATK_ALLCLASS_GUITAR_RIFF_KILL )
 	{
 		Vector origin( GetAbsOrigin() );
 
@@ -20897,6 +20897,9 @@ void CTFPlayer::DoTauntAttack( void )
 		CBroadcastRecipientFilter filter;
 		TE_TFParticleEffect( filter, 0.0, "bl_killtaunt", GetAbsOrigin(), GetAbsAngles(), pTarget, PATTACH_ABSORIGIN_FOLLOW );
 		EmitSound( "Taunt.GuitarRiff" );
+
+		m_flTauntAttackTime = gpGlobals->curtime + (3.1f / flPlaybackRate);
+		m_iTauntAttack = TAUNTATK_ALLCLASS_GUITAR_RIFF_KILL;
 	}
 	else if ( iTauntAttack == TAUNTATK_MEDIC_INHALE )
 	{

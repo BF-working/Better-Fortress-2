@@ -123,6 +123,16 @@
 				"width"		"74"
 				"height"	"32"
 		}
+		//Shred Alert
+		"taunt_guitar_riff_kill"
+		{
+				"dfile"	"HUD/d_images_v3"
+				"dnegfile"	"HUD/dneg_images_v3"
+				"x"		"256"
+				"y"		"448"
+				"width"		"128"
+				"height"	"32"		
+		}
 		
 		//STEAM FRIEND ICON - DO NOT TOUCH
 		"ico_friend_indicator"
