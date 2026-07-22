@@ -1,6 +1,10 @@
 "enginetools"
 {
-	"library"	"tools/x64/commedit.dll"
-	"library"	"tools/x64/pet.dll"
-	"library"	"tools/x64/vmt.dll"
+	"library"	"../tools/x64/actbusy.dll"
+	"library"	"../tools/x64/commedit.dll"
+	"library"	"../tools/x64/gameevents.dll"
+	"library"	"../tools/x64/pet.dll"
+	"library"	"../tools/x64/sampletool.dll"
+	"library"	"../tools/x64/vcdblock.dll"
+	"library"	"../tools/x64/vmt.dll"
 }
