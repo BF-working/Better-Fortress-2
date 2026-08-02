@@ -20797,7 +20797,7 @@ void CTFPlayer::DoTauntAttack( void )
 		{
 			// Skip players on the same team or who are invuln
 			CTFPlayer *pPlayer = ToTFPlayer( pEntity );
-			if ( !pPlayer || InSameTeam( pPlayer ) || pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) )
+			if ( !pPlayer || InSameTeam( pPlayer ) && !friendlyfire.GetBool() || pPlayer == this || pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) )
 				continue;
 
 			// CEntitySphereQuery actually does a box test. So we need to make sure the distance is less than the radius first.
