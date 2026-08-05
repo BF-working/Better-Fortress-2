@@ -303,6 +303,8 @@ void CObjectSentrygun::SentryThink( void )
 	}
 
 	// infinite ammo for enemy team in MvM mode
+	// Custom Fortress - This is Idiotic and useless.
+	/*
 	if ( TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS )
 	{
 		m_iAmmoRockets = SENTRYGUN_MAX_ROCKETS;
@@ -310,6 +312,7 @@ void CObjectSentrygun::SentryThink( void )
 		m_iAmmoShells = SENTRYGUN_MAX_SHELLS_3;
 		m_iMaxAmmoShells = SENTRYGUN_MAX_SHELLS_3;
 	}
+	*/
 }
 
 void CObjectSentrygun::StartPlacement( CTFPlayer *pPlayer )
@@ -435,6 +438,10 @@ void CObjectSentrygun::OnGoActive( void )
 		m_iAmmoShells = m_iMaxAmmoShells;
 		m_iAmmoRockets = m_iMaxAmmoRockets;
 	}
+
+	//Instead of setting the ammo in the Think, we give an Exsisting Spawnflag
+	if (TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS)
+		AddSpawnFlags(SF_SENTRY_INFINITE_AMMO);
 
 	// Init attachments for level 1 sentry gun
 	m_iAttachments[SENTRYGUN_ATTACHMENT_MUZZLE] = LookupAttachment( "muzzle" );
