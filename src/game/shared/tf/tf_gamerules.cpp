@@ -6915,7 +6915,7 @@ bool CTFGameRules::ApplyOnDamageModifyRules( CTakeDamageInfo &info, CBaseEntity 
 	info.SetDamage( flDamage );
 
 	// Apply on-hit attributes (after damage has been updated)
-	if ( pVictim && pAttacker && pAttacker->GetTeam() != pVictim->GetTeam() && pAttacker->IsPlayer() && pWeapon )
+	if ( pVictim && pAttacker && ( pAttacker->GetTeam() != pVictim->GetTeam() || friendlyfire.GetBool() ) && pAttacker->IsPlayer() && pWeapon)
 	{
 		pWeapon->ApplyOnHitAttributes( pVictimBaseEntity, pTFAttacker, info );
 	}

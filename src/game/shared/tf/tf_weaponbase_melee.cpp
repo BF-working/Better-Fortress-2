@@ -636,7 +636,7 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 			g_pPasstimeLogic->OnBallCarrierMeleeHit( pTargetPlayer, pPlayer );
 		}
 
-		if ( pPlayer->GetTeamNumber() != pTargetPlayer->GetTeamNumber() )
+		if ( pPlayer->GetTeamNumber() != pTargetPlayer->GetTeamNumber() || friendlyfire.GetBool() )
 		{
 			bHitEnemyPlayer = true;
 
@@ -1022,7 +1022,7 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity* ent, trace_t& trace, float 
 		{
 			CTFPlayer *pVictimPlayer = ToTFPlayer( ent );
 
-			if ( pVictimPlayer && pVictimPlayer->CanBeForcedToLaugh() && ( pPlayer->GetTeamNumber() != pVictimPlayer->GetTeamNumber() ) )
+			if ( pVictimPlayer && pVictimPlayer->CanBeForcedToLaugh() && ( pPlayer->GetTeamNumber() != pVictimPlayer->GetTeamNumber() || friendlyfire.GetBool() ) )
 			{
 				// force victim to laugh!
 				pVictimPlayer->Taunt( TAUNT_MISC_ITEM, MP_CONCEPT_TAUNT_LAUGH );
@@ -1041,7 +1041,7 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity* ent, trace_t& trace, float 
 		{
 			CTFPlayer *pVictimPlayer = ToTFPlayer( ent );
 
-			if ( pVictimPlayer && pVictimPlayer->CanBeForcedToLaugh() && ( pPlayer->GetTeamNumber() != pVictimPlayer->GetTeamNumber() ) )
+			if ( pVictimPlayer && pVictimPlayer->CanBeForcedToLaugh() && ( pPlayer->GetTeamNumber() != pVictimPlayer->GetTeamNumber() || friendlyfire.GetBool() ) )
 			{
 				CTFWeaponBase *myWeapon = pPlayer->GetActiveTFWeapon();
 				CTFWeaponBase *theirWeapon = pVictimPlayer->GetActiveTFWeapon();

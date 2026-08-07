@@ -20517,7 +20517,7 @@ void CTFPlayer::DoTauntAttack( void )
 		{
 			CBaseEntity *pEnt = tr.m_pEnt;
 
-			if ( pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && pEnt->GetTeamNumber() != GetTeamNumber() )
+			if (pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && (pEnt->GetTeamNumber() != GetTeamNumber() || friendlyfire.GetBool()))
 			{
 				CTFPlayer *pVictim = ToTFPlayer( pEnt );
 
@@ -20653,7 +20653,7 @@ void CTFPlayer::DoTauntAttack( void )
 		{
 			CBaseEntity *pEnt = tr.m_pEnt;
 
-			if ( pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && pEnt->GetTeamNumber() != GetTeamNumber() )
+			if (pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && (pEnt->GetTeamNumber() != GetTeamNumber() || friendlyfire.GetBool() ) )
 			{
 				// Launch them up a little
 				AngleVectors( QAngle(-45, m_angEyeAngles[YAW], 0), &vecForward );
@@ -20727,7 +20727,7 @@ void CTFPlayer::DoTauntAttack( void )
 				if ( !pTarget )
 					continue;
 
-				if ( pTarget->GetTeamNumber() == GetTeamNumber() )
+				if ( pTarget->GetTeamNumber() == GetTeamNumber() && !friendlyfire.GetBool() )
 					continue;
 
 				// Do a quick trace and make sure we have LOS.
@@ -20930,7 +20930,7 @@ void CTFPlayer::DoTauntAttack( void )
 		{
 			CBaseEntity *pEnt = tr.m_pEnt;
 
-			if ( pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && pEnt->GetTeamNumber() != GetTeamNumber() )
+			if (pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && (pEnt->GetTeamNumber() != GetTeamNumber() || friendlyfire.GetBool()))
 			{
 				CTFPlayer *pVictim = ToTFPlayer( pEnt );
 
@@ -20982,7 +20982,7 @@ void CTFPlayer::DoTauntAttack( void )
 		{
 			CBaseEntity *pEnt = tr.m_pEnt;
 
-			if ( pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && pEnt->GetTeamNumber() != GetTeamNumber() )
+			if (pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && (pEnt->GetTeamNumber() != GetTeamNumber() || friendlyfire.GetBool()))
 			{
 				vecForward = (WorldSpaceCenter() - pEnt->WorldSpaceCenter());
 				VectorNormalize( vecForward );
@@ -21003,7 +21003,7 @@ void CTFPlayer::DoTauntAttack( void )
 		{
 			CBaseEntity *pEnt = tr.m_pEnt;
 
-			if ( pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && pEnt->GetTeamNumber() != GetTeamNumber() )
+			if (pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && (pEnt->GetTeamNumber() != GetTeamNumber() || friendlyfire.GetBool()))
 			{
 				vecForward = (WorldSpaceCenter() - pEnt->WorldSpaceCenter());
 				VectorNormalize( vecForward );
@@ -21178,7 +21178,7 @@ void CTFPlayer::DoTauntAttack( void )
 		{
 			CBaseEntity *pEnt = tr.m_pEnt;
 
-			if ( pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && pEnt->GetTeamNumber() != GetTeamNumber() )
+			if (pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && (pEnt->GetTeamNumber() != GetTeamNumber() || friendlyfire.GetBool()))
 			{
 				// Launch them up a little
 				AngleVectors( QAngle( -45, m_angEyeAngles[ YAW ], 0 ), &vecForward );
@@ -21207,7 +21207,7 @@ void CTFPlayer::DoTauntAttack( void )
 
 				CTFPlayer * pAffectedPlayers = ToTFPlayer(pList[i]);
 				//Extinguish our friends, push back our enemies.
-				if (pAffectedPlayers->GetTeamNumber() == GetTeamNumber())
+				if (pAffectedPlayers->GetTeamNumber() == GetTeamNumber() && !friendlyfire.GetBool() )
 				{
 					//Ignore non burning teammates
 					if (!pAffectedPlayers->m_Shared.InCond(TF_COND_BURNING))
