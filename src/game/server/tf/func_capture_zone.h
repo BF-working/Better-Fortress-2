@@ -12,6 +12,7 @@
 #include "triggers.h"
 
 class CBaseObject;
+class CTFBot;
 // This class is to get around the fact that DEFINE_FUNCTION doesn't like multiple inheritance
 class CCaptureZoneShim : public CBaseTrigger
 {
@@ -51,6 +52,8 @@ public:
 
 	void	PlayerDestructionThink( void );
 
+	bool HasTag(const char* groupname) const;
+	bool HasAnyTags(void) const { return m_tags.Count() > 0; }
 private:
 
 	CNetworkVar( bool, m_bDisabled );		// Enabled/Disabled?
@@ -69,6 +72,10 @@ private:
 	bool			m_bShouldBlock;
 	float			m_flCaptureDelay;
 	float			m_flCaptureDelayOffset;
+
+	//Bot Tags
+	string_t m_iszTags;
+	CUtlVector< CFmtStr > m_tags;
 };
 
 

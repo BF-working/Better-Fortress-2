@@ -5088,20 +5088,21 @@ void C_TFPlayer::UpdateKartSounds()
 	}
 
 	// Uncomment this (if) when we have a tire screech sound
-	//if ( ( m_iKartState & CTFPlayerShared::kKartState_Driving ) && GetCurrentTauntMoveSpeed() < 300.f )
-	//{
-	//	if ( m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] == NULL )
-	//	{
-	//		CBroadcastRecipientFilter filter;
-	//		m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] = controller.SoundCreate( filter, entindex(), "BumperCar.GoLoop" );
-	//		controller.Play( m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ], 1.f, 80.f );
-	//	}
-	//}
-	//else if ( m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] )
-	//{
-	//	controller.SoundDestroy( m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] );
-	//	m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] = NULL;
-	//}
+	// Custom Fortress - Seems to work? the sound is not Looped tho.
+	if ( ( m_iKartState & CTFPlayerShared::kKartState_Driving ) && GetCurrentTauntMoveSpeed() < 300.f )
+	{
+		if ( m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] == NULL )
+		{
+			CBroadcastRecipientFilter filter;
+			m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] = controller.SoundCreate( filter, entindex(), "BumperCar.Screech" );
+			controller.Play( m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ], 1.f, 80.f );
+		}
+	}
+	else if ( m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] )
+	{
+		controller.SoundDestroy( m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] );
+		m_pKartSounds[ KART_SOUND_BURNOUT_LOOP ] = NULL;
+	}
 }
 
 //-----------------------------------------------------------------------------

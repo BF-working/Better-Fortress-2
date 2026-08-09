@@ -947,6 +947,9 @@ bool CWeaponMedigun::IsAttachedToEntity(void)
 	if (!m_hHealingTarget)
 		return false;
 
+	if ( m_hHealingTarget->IsPlayer() )
+		return false;
+
 	if ( m_hHealingTarget->IsBaseObject() )
 		return IsAttachedToBuilding();
 

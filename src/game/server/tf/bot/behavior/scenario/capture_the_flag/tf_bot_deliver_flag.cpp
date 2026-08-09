@@ -327,7 +327,26 @@ QueryResultType	CTFBotDeliverFlag::ShouldRetreat( const INextBot *me ) const
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CTFBot > CTFBotDeliverFlag::OnContact( CTFBot *me, CBaseEntity *other, CGameTrace *result )
 {
-	if ( TFGameRules()->IsMannVsMachineMode() && other && FClassnameIs( other, "func_capturezone" ) )
+	//Check if i can only deploy in designed zones.
+	CCaptureZone* pAreaTrigger = dynamic_cast<CCaptureZone*>(other);
+	bool bZoneHasTag = false;
+	bool bIsTagBot = me->HasAttribute(CTFBot::DEPLOY_AT_TAGGED_ZONES_ONLY);
+	if (pAreaTrigger && bIsTagBot )
+	{
+		const CUtlVector<CFmtStr>& botTags = me->GetAllTags();
+
+		for (int i = 0; i < botTags.Count(); ++i)
+		{
+			if (pAreaTrigger->HasTag(botTags[i]))
+			{
+				bZoneHasTag = true;
+				break;
+			}
+		}
+
+	}
+
+	if ( TFGameRules()->IsMannVsMachineMode() && other && FClassnameIs( other, "func_capturezone" ) && ( !bIsTagBot || bZoneHasTag ) )
 	{
 		return TrySuspendFor( new CTFBotMvMDeployBomb, RESULT_CRITICAL, "Delivering the bomb!" );
 	}

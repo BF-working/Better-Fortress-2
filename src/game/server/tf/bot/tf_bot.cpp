@@ -2191,12 +2191,28 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 
 //-----------------------------------------------------------------------------------------------------
 // Return capture zone for our flag(s)
-CCaptureZone *CTFBot::GetFlagCaptureZone( void ) const
+CCaptureZone* CTFBot::GetFlagCaptureZone(void) const
 {
-	for( int i=0; i<ICaptureZoneAutoList::AutoList().Count(); ++i )
+	for (int i = 0; i < ICaptureZoneAutoList::AutoList().Count(); ++i)
 	{
-		CCaptureZone *zone = static_cast< CCaptureZone* >( ICaptureZoneAutoList::AutoList()[i] );
-		if ( zone->GetTeamNumber() == GetTeamNumber() && !zone->IsDisabled() )
+		CCaptureZone* zone = static_cast<CCaptureZone*>(ICaptureZoneAutoList::AutoList()[i]);
+
+		bool bIsTagBot = HasAttribute(CTFBot::DEPLOY_AT_TAGGED_ZONES_ONLY);
+		bool bTagMatches = false;
+
+		if (bIsTagBot)
+		{
+			for (int t = 0; t < m_tags.Count(); ++t)
+			{
+				if (zone->HasTag(m_tags[t]))
+				{
+					bTagMatches = true;
+					//break;
+				}
+			}
+		}
+
+		if (zone->GetTeamNumber() == GetTeamNumber() && !zone->IsDisabled() && (!bIsTagBot || bTagMatches))
 		{
 			return zone;
 		}
@@ -4500,11 +4516,18 @@ bool CTFBot::HasTag( const char *tag )
 
 
 //---------------------------------------------------------------------------------------------
-void CTFBot::ScriptGetAllTags( HSCRIPT hTable )
+const CUtlVector<CFmtStr>& CTFBot::GetAllTags()
 {
-	for ( int i = 0; i < m_tags.Count(); i++ )
+	return m_tags;
+}
+
+void CTFBot::ScriptGetAllTags(HSCRIPT hTable)
+{
+	const CUtlVector<CFmtStr>& tags = GetAllTags();
+
+	for (int i = 0; i < tags.Count(); i++)
 	{
-		g_pScriptVM->SetValue( hTable, CFmtStr( "%d", i ), m_tags[ i ] );
+		g_pScriptVM->SetValue( hTable, CFmtStr("%d", i), tags[i] );
 	}
 }
 

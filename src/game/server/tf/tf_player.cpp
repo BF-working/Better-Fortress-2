@@ -18871,8 +18871,9 @@ bool CTFPlayer::FindOpenTauntPartnerPosition( const CEconItemView *pEconItemView
 		return false;
 	}
 
-	const float flTauntSeparationForwardDistance = tf_highfive_separation_forward.GetFloat() != 0 ? tf_highfive_separation_forward.GetFloat() : pItemDef->GetTauntData()->GetTauntSeparationForwardDistance();
-	const float flTauntSeparationRightDistance = tf_highfive_separation_right.GetFloat() != 0 ? tf_highfive_separation_right.GetFloat() : pItemDef->GetTauntData()->GetTauntSeparationRightDistance();
+	//Custom Fortress - We account the Modelscale, so taunts will appear correct depending on your size :)
+	const float flTauntSeparationForwardDistance = tf_highfive_separation_forward.GetFloat() != 0 ? tf_highfive_separation_forward.GetFloat() : pItemDef->GetTauntData()->GetTauntSeparationForwardDistance() * GetModelScale();
+	const float flTauntSeparationRightDistance = tf_highfive_separation_right.GetFloat() != 0 ? tf_highfive_separation_right.GetFloat() : pItemDef->GetTauntData()->GetTauntSeparationRightDistance() * GetModelScale();
 
 	bool ret = true;
 	Vector forward, right;
@@ -20343,7 +20344,7 @@ static void DispatchRPSEffect( const CTFPlayer *pPlayer, const char* pszParticle
 {
 	CEffectData	data;
 	data.m_nHitBox = GetParticleSystemIndex( pszParticleName );
-	data.m_vOrigin = pPlayer->GetAbsOrigin() + Vector( 0, 0, 87.0f );
+	data.m_vOrigin = pPlayer->GetAbsOrigin() + Vector( 0, 0, 87.0f ) * pPlayer->GetModelScale(); // Custom Fortress - Account scale
 	data.m_vAngles = vec3_angle;
 
 	CPASFilter intiatorFilter( data.m_vOrigin );

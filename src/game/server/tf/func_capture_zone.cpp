@@ -11,7 +11,6 @@
 #include "tf_gamerules.h"
 #include "entity_capture_flag.h"
 #include "tf_logic_player_destruction.h"
-
 //=============================================================================
 //
 // CTF Flag Capture Zone tables.
@@ -24,6 +23,7 @@ DEFINE_KEYFIELD( m_nCapturePoint, FIELD_INTEGER, "CapturePoint" ),
 DEFINE_KEYFIELD( m_flCaptureDelay, FIELD_FLOAT, "capture_delay" ),
 DEFINE_KEYFIELD( m_flCaptureDelayOffset, FIELD_FLOAT, "capture_delay_offset" ),
 DEFINE_KEYFIELD( m_bShouldBlock, FIELD_BOOLEAN, "shouldBlock" ),
+DEFINE_KEYFIELD( m_iszTags, FIELD_STRING, "tags" ),
 
 // Functions.
 DEFINE_FUNCTION( CCaptureZoneShim::Touch ),
@@ -78,8 +78,42 @@ void CCaptureZone::Spawn()
 		SetDisabled( true );
 	}
 
+	//Bot Tags
+	m_tags.RemoveAll();
+
+	const char* tags = STRING(m_iszTags);
+
+	// chop space-delimited string into individual tokens
+	if (tags)
+	{
+		char* buffer = V_strdup(tags);
+
+		for (char* token = strtok(buffer, " "); token; token = strtok(NULL, " "))
+		{
+			m_tags.AddToTail(CFmtStr("%s", token));
+		}
+
+		delete[] buffer;
+	}
+
 	m_flNextTouchingEnemyZoneWarning = -1;
 	AddSpawnFlags( SF_TRIGGER_ALLOW_ALL ); // so we can keep track of who is touching us
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CCaptureZone::HasTag(const char* groupname) const
+{
+	for (int i = 0; i < m_tags.Count(); ++i)
+	{
+		if (FStrEq(m_tags[i], groupname))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 //-----------------------------------------------------------------------------

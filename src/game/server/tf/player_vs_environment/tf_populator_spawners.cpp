@@ -754,6 +754,10 @@ static bool ParseDynamicAttributes( CTFBot::EventChangeAttributes_t& event, KeyV
 		{
 			event.m_attributeFlags |= CTFBot::USE_DIFFICULTY_BASED_AIM;
 		}
+		else if ( !Q_stricmp( value, "DeployAtZonesWithSameTags" ) )
+		{
+			event.m_attributeFlags |= CTFBot::DEPLOY_AT_TAGGED_ZONES_ONLY;
+		}
 		else
 		{
 			Warning( "TFBotSpawner: Invalid attribute '%s'\n", value );

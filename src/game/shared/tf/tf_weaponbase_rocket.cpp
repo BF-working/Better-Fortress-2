@@ -505,7 +505,8 @@ void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
 	}
 
 	int nTeam = iVisualOverride ? iVisualOverride : GetTeamNumber();
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && nTeam == TF_TEAM_PVE_INVADERS && !iVisualOverride )
+	// MvM - Giant Soldier
+	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && nTeam == TF_TEAM_PVE_INVADERS && ToTFPlayer( GetOwnerPlayer() )->IsMiniBoss() && !iVisualOverride)
 	{
 		nTeam = TF_TEAM_PVE_INVADERS_GIANTS;
 	}
