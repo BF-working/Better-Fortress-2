@@ -4229,7 +4229,7 @@ static const char *s_PreserveEnts[] =
 	"func_upgradestation",
 	"entity_rocket",
 	"entity_carrier",
-	"entity_bird",
+	//"entity_bird",
 	"entity_sign",
 	"entity_saucer",
 	"tf_halloween_gift_pickup",
