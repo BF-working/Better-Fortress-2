@@ -180,6 +180,7 @@ const char g_szBotViewmodels[][MAX_PATH] =
 	"models/mvm/weapons/c_models/c_engineer_bot_arms.mdl",
 };
 
+//TEMP: make unique hands for bosses
 const char g_szBotBossViewmodels[][MAX_PATH] =
 {
 	"", //TF_CLASS_UNDEFINED

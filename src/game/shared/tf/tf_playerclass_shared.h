@@ -44,15 +44,18 @@ public:
 #ifdef CLIENT_DLL
 	string_t	GetClassIconName( void ) const					{ return MAKE_STRING( m_iszClassIcon ); }
 	bool		HasCustomModel( void ) const					{ return m_iszCustomModel[0] != '\0'; }
+	bool		HasCustomHandsModel( void ) const				{ return m_iszCustomHandsModel[0] != '\0'; }
 #else
 	string_t	GetClassIconName( void ) const					{ return m_iszClassIcon.Get(); }
 	void		SetClassIconName( string_t iszClassIcon )		{ m_iszClassIcon = iszClassIcon; }
 	bool		HasCustomModel( void ) const					{ return (m_iszCustomModel.Get() != NULL_STRING); }
+	bool		HasCustomHandsModel( void ) const				{ return (m_iszCustomHandsModel.Get() != NULL_STRING); }
 #endif
 
 #ifndef CLIENT_DLL
 	#define USE_CLASS_ANIMATIONS true
 	void		SetCustomModel( const char *pszModelName, bool isUsingClassAnimations = false );
+	void		SetCustomHandsModel( const char *pszModelName );
 	void		SetCustomModelOffset( const Vector &vecOffset )		{ m_vecCustomModelOffset = vecOffset; }
 	void		SetCustomModelRotates( bool bRotates )			{ m_bCustomModelRotates = bRotates; }
 	void		SetCustomModelRotation( const QAngle &vecOffset )		{ m_angCustomModelRotation = vecOffset; m_bCustomModelRotationSet = true; }
@@ -63,6 +66,9 @@ public:
 	const char	*GetName( void ) const							{ return GetPlayerClassData( m_iClass )->m_szClassName; }
 	const char	*GetModelName( void ) const;
 	const char	*GetHandModelName( int iHandIndex ) const;
+
+	const char	*GetCustomHandsModel( void ) const;				
+
 	float		GetMaxSpeed( void )								{ return GetPlayerClassData( m_iClass )->m_flMaxSpeed; }
 	int			GetMaxHealth( void ) const						{ return GetPlayerClassData( m_iClass )->m_nMaxHealth; }
 	int			GetMaxArmor( void )	const						{ return GetPlayerClassData( m_iClass )->m_nMaxArmor; }
@@ -86,9 +92,11 @@ protected:
 #ifdef CLIENT_DLL
 	char		m_iszClassIcon[MAX_PATH];
 	char		m_iszCustomModel[MAX_PATH];
+	char        m_iszCustomHandsModel[MAX_PATH];
 #else
 	CNetworkVar( string_t, m_iszClassIcon );
 	CNetworkVar( string_t, m_iszCustomModel );
+	CNetworkVar( string_t, m_iszCustomHandsModel );
 #endif
 	CNetworkVar( Vector, m_vecCustomModelOffset );
 	CNetworkVar( QAngle, m_angCustomModelRotation );

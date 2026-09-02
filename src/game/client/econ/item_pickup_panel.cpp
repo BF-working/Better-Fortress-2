@@ -384,12 +384,14 @@ void CItemPickupPanel::UpdateModelPanels( void )
 	{
 		if ( m_aItems.Count() > 1 )
 		{
-			m_pItemsFoundLabel->SetText( "#NewItemsAcquired" );
+			//m_pItemsFoundLabel->SetText( "#NewItemsAcquired" );
+			m_pItemsFoundLabel->SetText("#CF_NewItemsAcquired");
 			SetDialogVariable( "numitems", m_aItems.Count() );
 		}
 		else
 		{
-			m_pItemsFoundLabel->SetText( "#NewItemAcquired" );
+			//m_pItemsFoundLabel->SetText( "#NewItemAcquired" );
+			m_pItemsFoundLabel->SetText("#CF_NewItemAcquired");
 		}
 	}
 

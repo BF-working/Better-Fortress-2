@@ -79,3 +79,21 @@
 	"volume"	"1.0"
 	"wave"		")weapons/minigun_assault_wind_down.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// SVDL - Cut Content
+// ------------------------------------------------------------------------------------ //
+// Noise Makers
+// ------------------------------------------------------------------------------------ //
+"Halloween.Spooky"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1"
+	"pitch"		"90, 110"
+	"soundlevel"	"SNDLVL_90dB"
+	"rndwave"
+	{
+		"wave"		"items/halloween/spooky01.wav"
+		"wave"		"items/halloween/spooky02.wav"
+		"wave"		"items/halloween/spooky03.wav"
+	}
+}

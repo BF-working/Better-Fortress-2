@@ -1273,6 +1273,17 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		// 1 - Block Voice commands. 2 - Block Voice commands & Medic Call
+		"4052"
+		{
+			"name"	"disable voicemenu"
+			"attribute_class"	"voicemenu_disabled"
+			"description_string"	"#Attrib_TeleporterPads"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"negative"
+			"stored_as_integer"	"1"
+		}
 	}
 	"items"
 	{
@@ -3001,7 +3012,7 @@
 				"is community contributed item"
 				{
 					"attribute_class"  "is_community_contributed_item"
-					"value"							"[U:1:65509397], [U:1:51441837], [U:1:79611342], [U:1:484693647]"
+					"value"			   "[U:1:65509397], [U:1:51441837], [U:1:79611342], [U:1:484693647]"
 				}
 			}
 		}
@@ -3521,6 +3532,7 @@
 			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
 			"drop_sound"		"ui/item_metal_weapon_drop.wav"
 		}
+		// BETA - Jumppads
 		"32026"
 		{
 			"name"	"TF_WEAPON_PDA_BUILD_PADS"
@@ -4138,6 +4150,187 @@
 			"mouse_pressed_sound"	"ui/item_knife_small_pickup.wav"
 			"drop_sound"		"ui/item_light_gun_drop.wav"
 		}
+		// NOISE MAKERS
+		// Samurai Yell A
+		"32036"
+		{
+			"name"	"Noise Maker - Yell"
+			"prefab"	"valve cf_restored_item"
+			"loadondemand"	"1"
+			"item_class"	"tf_wearable"
+			"tool"
+			{
+				"type"	"noise_maker"
+			}
+			"capabilities"
+			{
+				"usable"		"1"
+				"usable_gc"		"1"
+			}
+			"show_in_armory"	"1"
+			"armory_desc"		"action noisemaker"
+			"item_type_name"	"#TF_Party_Favor"
+			"item_name"	"#TF_NoiseMaker_Yell"
+			"item_slot"	"action"
+			"image_inventory"	"backpack/crafting/noisemaker_yell"
+			"item_quality" 	"rarity2"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"spy" 		"1"
+				"engineer" 	"1"
+				"pyro" 		"1"
+			}
+			"attributes"
+			{
+				"noise maker"
+				{
+					"attribute_class"	"enable_misc2_noisemaker"
+					"value"			"1"
+				}
+				"unlimited quantity"
+				{
+					"attribute_class"	"unlimited_quantity"
+					"value" "1"
+				}
+			}
+			"visuals"
+			{
+				"custom_sound0"		"Samurai.Exaltation"
+			}
+			"mouse_pressed_sound" 	"Samurai.Exaltation"
+			"drop_sound"		"ui/item_metal_scrap_drop.wav"
+		}
+		// Samurai Bowl
+		"32037"
+		{
+			"name"	"Noise Maker - Prayer Bowl"
+			"prefab"	"valve cf_restored_item"
+			"loadondemand"	"1"
+			"item_class"	"tf_wearable"
+			"tool"
+			{
+				"type"	"noise_maker"
+			}
+			"capabilities"
+			{
+				"usable"		"1"
+				"usable_gc"		"1"
+			}
+			"show_in_armory"	"1"
+			"armory_desc"		"action noisemaker"
+			"item_type_name"	"#TF_Party_Favor"
+			"item_name"	"#TF_NoiseMaker_PrayerBowl"
+			"item_slot"	"action"
+			"image_inventory"	"backpack/crafting/noisemaker_gong"
+			"item_quality" 	"rarity2"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"spy" 		"1"
+				"engineer" 	"1"
+				"pyro" 		"1"
+			}
+			"attributes"
+			{
+				"noise maker"
+				{
+					"attribute_class"	"enable_misc2_noisemaker"
+					"value"			"1"
+				}
+				"unlimited quantity"
+				{
+					"attribute_class"	"unlimited_quantity"
+					"value" "1"
+				}
+			}
+			"visuals"
+			{
+				"custom_sound0"		"Fundraiser.PrayerBowl"
+			}
+			"mouse_pressed_sound" 	"Fundraiser.PrayerBowl"
+			"drop_sound"		"ui/item_metal_scrap_drop.wav"
+		}
+		// Spooky
+		"32038"
+		{
+			"name"	"Halloween Noise Maker - Spooky"
+			"prefab"	"valve cf_restored_item"
+			"loadondemand"	"1"
+			"item_class"	"tf_wearable"
+			"tool"
+			{
+				"type"	"noise_maker"
+			}
+			"capabilities"
+			{
+				"usable"		"1"
+				"usable_gc"		"1"
+			}
+			"holiday_restriction"	"halloween_or_fullmoon"
+			"show_in_armory"	"1"
+			"armory_desc"		"action noisemaker"
+			"item_type_name"	"#TF_Party_Favor"
+			"item_name"	"#TF_NoiseMaker_Spooky"
+			"item_slot"	"action"
+			"image_inventory"	"backpack/crafting/noisemaker_spooky"
+			"item_quality" 	"rarity2"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"spy" 		"1"
+				"engineer" 	"1"
+				"pyro" 		"1"
+			}
+			"attributes"
+			{
+				"noise maker"
+				{
+					"attribute_class"	"enable_misc2_noisemaker"
+					"value"			"1"
+				}
+				"unlimited quantity"
+				{
+					"attribute_class"	"unlimited_quantity"
+					"value" "1"
+				}
+			}
+			"visuals"
+			{
+				"custom_sound0"		"Halloween.Spooky"
+				"particle_effect"	"halloween_notes"
+			}
+			"mouse_pressed_sound" 	"Halloween.Spooky"
+			"drop_sound"		"ui/item_metal_scrap_drop.wav"
+		}
+		//WARPAINTS
 		"34000" 
 		{
 			"name"		"Paintkit 800"

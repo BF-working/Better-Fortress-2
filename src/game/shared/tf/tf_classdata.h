@@ -71,6 +71,7 @@ struct TFPlayerClassData_t
 
 	TFPlayerClassData_t();
 	const char *GetModelName() const;
+	const char *GetHandsModelName() const;
 
 #ifdef GAME_DLL
 	const char *GetDeathSound( int nType );

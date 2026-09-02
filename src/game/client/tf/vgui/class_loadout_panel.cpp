@@ -649,12 +649,14 @@ void CClassLoadoutPanel::PerformLayout( void )
 			iButtonPos = g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[i];
 		}
 
+		/*
 		DevMsg("Slot %2d -> Pos %2d | Taunt:%d Extra:%d\n",
 			i,
 			iButtonPos,
 			IsTauntPanelPosition(iButtonPos),
 			IsExtraPanelPosition(iButtonPos)
 		);
+		*/
 
 		bool bIsVisible = false;
 		if (iButtonPos > 0)

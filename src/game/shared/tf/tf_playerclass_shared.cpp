@@ -30,6 +30,7 @@ BEGIN_RECV_TABLE_NOBASE( CTFPlayerClassShared, DT_TFPlayerClassShared )
 	RecvPropInt( RECVINFO( m_iClass ) ),
 	RecvPropString( RECVINFO( m_iszClassIcon ) ),
 	RecvPropString( RECVINFO( m_iszCustomModel ) ),
+	RecvPropString( RECVINFO( m_iszCustomHandsModel ) ),
 	RecvPropVector( RECVINFO( m_vecCustomModelOffset ) ),
 	RecvPropQAngles( RECVINFO( m_angCustomModelRotation ) ),
 	RecvPropBool( RECVINFO( m_bCustomModelRotates ) ),
@@ -46,6 +47,7 @@ BEGIN_SEND_TABLE_NOBASE( CTFPlayerClassShared, DT_TFPlayerClassShared )
 	SendPropInt( SENDINFO( m_iClass ), Q_log2( TF_CLASS_COUNT_ALL )+1, SPROP_UNSIGNED ),
 	SendPropStringT( SENDINFO( m_iszClassIcon ) ),
 	SendPropStringT( SENDINFO( m_iszCustomModel ) ),
+	SendPropString( SENDINFO( m_iszCustomHandsModel ) ),
 	SendPropVector( SENDINFO( m_vecCustomModelOffset ) ),
 	SendPropQAngles( SENDINFO( m_angCustomModelRotation ) ),
 	SendPropBool( SENDINFO( m_bCustomModelRotates ) ),
@@ -75,9 +77,11 @@ void CTFPlayerClassShared::Reset( void )
 #ifdef CLIENT_DLL
 	m_iszClassIcon[0] = '\0';
 	m_iszCustomModel[0] = '\0';
+	m_iszCustomHandsModel[0] = '\0';
 #else
 	m_iszClassIcon.Set( NULL_STRING );
 	m_iszCustomModel.Set( NULL_STRING );
+	m_iszCustomHandsModel.Set( NULL_STRING );
 #endif
 	m_vecCustomModelOffset = vec3_origin;
 	m_angCustomModelRotation = vec3_angle;
@@ -114,6 +118,24 @@ void CTFPlayerClassShared::SetCustomModel( const char *pszModelName, bool isUsin
 
 	m_iClassModelParity = (m_iClassModelParity + 1) & CLASSMODEL_PARITY_MASK;
 }
+
+void CTFPlayerClassShared::SetCustomHandsModel( const char *pszModelName )
+{
+	if ( pszModelName && pszModelName[0] )
+	{
+		bool bAllowPrecache = CBaseEntity::IsPrecacheAllowed();
+		CBaseEntity::SetAllowPrecache( true );
+		CBaseEntity::PrecacheModel( pszModelName );
+		CBaseEntity::SetAllowPrecache( bAllowPrecache );
+
+		m_iszCustomHandsModel.Set( AllocPooledString( pszModelName ) );
+	}
+	else
+	{
+		m_iszCustomHandsModel.Set( NULL_STRING );
+	}
+
+}
 #endif // #ifndef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
@@ -127,6 +149,30 @@ bool CTFPlayerClassShared::CustomModelHasChanged( void )
 		return true;
 	}
 	return false;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+
+const char	*CTFPlayerClassShared::GetCustomHandsModel( void ) const						
+{ 
+	// Does this play have an overridden model?
+#ifdef CLIENT_DLL
+	if ( m_iszCustomHandsModel[0] )
+		return m_iszCustomHandsModel;
+#else
+	if ( m_iszCustomHandsModel.Get() != NULL_STRING )
+		return ( STRING( m_iszCustomHandsModel.Get() ) );
+#endif
+
+#define MAX_MODEL_FILENAME_LENGTH 256
+	static char modelFilename[ MAX_MODEL_FILENAME_LENGTH ];
+
+	Q_strncpy( modelFilename, GetPlayerClassData( m_iClass )->GetHandsModelName(), sizeof( modelFilename ) );
+
+
+	return modelFilename;
 }
 
 //-----------------------------------------------------------------------------

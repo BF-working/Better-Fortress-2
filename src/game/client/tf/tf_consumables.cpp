@@ -327,6 +327,9 @@ void CEconTool_Noisemaker::OnClientUseConsumable( CEconItemView *pItem, vgui::Pa
 	UseItemConfirm( true, context );
 
 	// Notify the player that they used their last charge.
+
+	//SDK_TEMP_PATCH - CF2, We gotta fix this somehow?
+	/*
 	if ( pItem->GetItemQuantity() <= 1 )
 	{
 		CEconNotification *pNotification = new CEconNotification();
@@ -334,6 +337,7 @@ void CEconTool_Noisemaker::OnClientUseConsumable( CEconItemView *pItem, vgui::Pa
 		pNotification->SetLifetime( 7.0f );
 		NotificationQueue_Add( pNotification );
 	}
+	*/
 }
 
 //-----------------------------------------------------------------------------

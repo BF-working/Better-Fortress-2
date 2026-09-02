@@ -23,6 +23,9 @@ extern bool UseHWMorphModels();
 #define TF_CLASS_ENGINEER_FILE			"scripts/playerclasses/engineer"
 #define TF_CLASS_CIVILIAN_FILE			"scripts/playerclasses/civilian"
 
+// Custom Fortress
+#define TF_CLASS_CUSTOM_FILE			"scripts/playerclasses/custom"
+
 const char *s_aPlayerClassFiles[] =
 {
 	TF_CLASS_UNDEFINED_FILE,
@@ -35,6 +38,7 @@ const char *s_aPlayerClassFiles[] =
 	TF_CLASS_PYRO_FILE,
 	TF_CLASS_SPY_FILE,
 	TF_CLASS_ENGINEER_FILE,
+	TF_CLASS_CUSTOM_FILE,
 	TF_CLASS_CIVILIAN_FILE
 };
 
@@ -103,6 +107,15 @@ const char *TFPlayerClassData_t::GetModelName() const
 	return m_szModelName;
 #else
 	return m_szModelName;
+#endif
+}
+
+const char *TFPlayerClassData_t::GetHandsModelName() const
+{
+#ifdef CLIENT_DLL
+	return m_szHandModelName;
+#else
+	return m_szHandModelName;
 #endif
 }
 

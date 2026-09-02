@@ -22,6 +22,10 @@
 	#include "hl_movedata.h"
 #endif
 
+#if defined(TF_DLL)
+#include "tf_player.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -2863,6 +2867,21 @@ bool CGameMovement::LadderMove( void )
 
 	if ( !GameHasLadders() )
 		return false;
+
+	#ifdef TF_DLL
+	//Is that Easy...
+	extern ConVar cf_allow_ladders;
+
+		CTFPlayer* pPlayer = ToTFPlayer(player);
+		if ( pPlayer->IsTaunting() && cf_allow_ladders.GetInt() != 2 )
+			return false;
+
+		if ( pPlayer->m_Shared.IsControlStunned() || pPlayer->m_Shared.IsLoserStateStunned() )
+			return false;
+
+		if ( pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
+			return false;
+	#endif
 
 	// If I'm already moving on a ladder, use the previous ladder direction
 	if ( player->GetMoveType() == MOVETYPE_LADDER )

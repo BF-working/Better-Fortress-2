@@ -348,30 +348,6 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVe
 	// ALL CLASS
 	DECLARE_ITEM_EFFECT_METER( CTFThrowable, TF_WEAPON_THROWABLE, true, "resource/UI/HudItemEffectMeter_Action.res" );
 
-	// Generic meter for any weapon with mod_ghostly_dash or other charge-based attributes
-	lambdaAddItemEffectMeter( "tf_weapon_scattergun", true );
-	lambdaAddItemEffectMeter( "tf_weapon_shotgun_soldier", true );
-	lambdaAddItemEffectMeter( "tf_weapon_shotgun_pyro", true );
-	lambdaAddItemEffectMeter( "tf_weapon_shotgun_hwg", true );
-	lambdaAddItemEffectMeter( "tf_weapon_shotgun_primary", true );
-	lambdaAddItemEffectMeter( "tf_weapon_rocketlauncher", true );
-	lambdaAddItemEffectMeter( "tf_weapon_grenadelauncher", true );
-	lambdaAddItemEffectMeter( "tf_weapon_pipebomblauncher", true );
-	lambdaAddItemEffectMeter( "tf_weapon_flamethrower", true );
-	lambdaAddItemEffectMeter( "tf_weapon_pistol", true );
-	lambdaAddItemEffectMeter( "tf_weapon_smg", true );
-	lambdaAddItemEffectMeter( "tf_weapon_revolver", true );
-	lambdaAddItemEffectMeter( "tf_weapon_bat", true );
-	lambdaAddItemEffectMeter( "tf_weapon_bottle", true );
-	lambdaAddItemEffectMeter( "tf_weapon_shovel", true );
-	lambdaAddItemEffectMeter( "tf_weapon_fireaxe", true );
-	lambdaAddItemEffectMeter( "tf_weapon_club", true );
-	lambdaAddItemEffectMeter( "tf_weapon_knife", true );
-	lambdaAddItemEffectMeter( "tf_weapon_wrench", true );
-	lambdaAddItemEffectMeter( "tf_weapon_bonesaw", true );
-	lambdaAddItemEffectMeter( "tf_weapon_medigun", true );
-	lambdaAddItemEffectMeter( "tf_weapon_sniperrifle", true );
-
 	// Kill Streak
 	DECLARE_ITEM_EFFECT_METER( CTFWeaponBase, TF_WEAPON_NONE, false, "resource/UI/HudItemEffectMeter_KillStreak.res" );
 
