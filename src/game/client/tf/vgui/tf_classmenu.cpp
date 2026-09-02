@@ -370,6 +370,9 @@ public:
 		{
 			m_pClassTipsListPanel->DeleteAllItems();
 
+			if ( iClass == TF_CLASS_RANDOM )
+				iClass = TF_CLASS_RANDOM_OLD;
+
 			int nScrollToItem = 0;
 
 			// Check if we're on the robot team in MvM Versus mode
