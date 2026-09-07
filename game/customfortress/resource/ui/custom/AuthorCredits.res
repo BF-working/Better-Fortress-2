@@ -4,7 +4,7 @@
 	{
 		"ControlName"		"EditablePanel"
 		"fieldName"			"TFModCreditsDialog"
-		"xpos"		"c-250"
+		"xpos"		"c"
 		"ypos"		"90"
 		"wide"		"500"
 		"tall"		"350"
@@ -24,7 +24,30 @@
 		"control_h"			"25"
 		"slider_w"			"500"
 		"slider_h"			"25"
+		
+		"OkButton"
+		{
+			"ControlName"	"CExButton"
+			"fieldName"		"OkButton"
+			"xpos"			"c-335"
+			"ypos"			"310"
+			"zpos"			"1"
+			"wide"			"400"
+			"tall"			"25"
+			"visible"		"1"
+			"enabled"		"1"
+			"tabPosition"	"0"
+			"labelText"		"#GameUI_Ok"
+			"font"			"HudFontSmallBold"
+			"textAlignment"	"center"
+			"dulltext"		"0"
+			"brighttext"	"0"
+			"Command"		"Ok"
+			"sound_depressed"	"UI/buttonclick.wav"
+			"sound_released"	"UI/buttonclickrelease.wav"
+		}
 	}
+	
 	"TitleLabel"
 	{
 		"ControlName"	"CExLabel"
@@ -43,6 +66,7 @@
 		"enabled"		"1"
 		"fgcolor_override" "200 80 60 255"
 	}
+	
 	"NoteLabel"
 	{
 		"ControlName"	"CExLabel"
@@ -61,39 +85,15 @@
 		"enabled"		"1"
 		"fgcolor_override" "200 80 60 255"
 	}
-	"OkButton"
-	{
-		"ControlName"	"CExButton"
-		"fieldName"		"OkButton"
-		"xpos"			"300"
-		"ypos"			"310"
-		"zpos"			"1"
-		"wide"			"100"
-		"tall"			"25"
-		"autoResize"	"0"
-		"pinCorner"		"3"
-		"visible"		"1"
-		"enabled"		"1"
-		"tabPosition"	"0"
-		"labelText"		"#GameUI_Ok"
-		"font"			"HudFontSmallBold"
-		"textAlignment"	"center"
-		"dulltext"		"0"
-		"brighttext"	"0"
-		"default"		"1"
-		"Command"		"Ok"
-		"sound_depressed"	"UI/buttonclick.wav"
-		"sound_released"	"UI/buttonclickrelease.wav"
-	}
 	
 	"PanelListPanel"
 	{
 		"ControlName"		"CPanelListPanel"
 		"fieldName"		"PanelListPanel"
 		"xpos"		"10"
-		"ypos"		"45"
+		"ypos"		"40"
 		"wide"		"480"
-		"tall"		"255"
+		"tall"		"260"
 		"autoResize"		"0"
 		"pinCorner"		"0"
 		"visible"		"1"

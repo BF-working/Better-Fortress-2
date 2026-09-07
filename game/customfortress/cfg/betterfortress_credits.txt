@@ -1,171 +1,184 @@
-//CREDITS TO BETAM!! PLAY HIS MOD RIGHT NOW!
-//
-// To the Viewer, please, if i forgot you and i added something from you, report it to me on Discord!
-// I Wanna credit everyone as possible, i don't wanna be a bad person :(
-//
-VERSION 1.0
-DESCRIPTION INFO_OPTIONS
+// We try our best to credit the people who have made this mod what it is, 
+// if we have forgotten anyone please do reach out to us at: https://discord.gg/NM82mujJsf, we don't wanna be bad people :(
+"CREDITS"
 {
 	"category1"
 	{
-		"Dev Team"
-		{ CATEGORY }
+		"label"		"Dev Team"
+		"type"		"CATEGORY"
 	}
 	"credit1_1"
 	{
-		"by Alien31, main_thing"
-		{ BOOL }
-		{ "1" }
-	}	
+		"label"		"Alien31 - Did a lot of the programming for miscellaneous features"
+		"tooltip"	"Click to open profile (https://github.com)"
+		"type"		"BUTTON"
+		"val"			"url https://github.com/main-thing"
+	}
 	"credit1_2"
 	{
-		"PracticeMedicine - Discord RPC, Misc. Fixes"
-		"https://github.com/practicemedicine"
-		{ BOOL }
-		{ "1" }
-	}	
+		"label"		"main_thing - Did some programming for miscellaneous features"
+		"tooltip"	"Click to open profile (https://github.com)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/id/main_thing/"
+	}
 	"credit1_3"
 	{
-		"Vvis - give_econ command, Mini-Dispenser cost"
-		"https://github.com/Lambdagon"
-		{ BOOL }
-		{ "1" }
-	}	
+		"label"		"PracticeMedicine - Discord RPC, Misc. Fixes"
+		"tooltip"	"Click to open profile (https://github.com)"
+		"type"		"BUTTON"
+		"val"			"url https://github.com/practicemedicine"
+	}
 	"credit1_4"
 	{
-		"Published by MIXERRULES"
-		"https://wiki.tf2sm.info"
-		{ BOOL }
-		{ "1" }
-	}	
+		"label"		"Vvis - give_econ command, Mini-Dispenser cost, radial menu"
+		"tooltip"	"Click to open profile (https://github.com)"
+		"type"		"BUTTON"
+		"val"			"url https://github.com/Lambdagon"
+	}
+	"credit1_5"
+	{
+		"label"	"Published by MIXERRULES"
+		"tooltip"	"Click to open profile (https://wiki.tf2sm.info)"
+		"type"		"BUTTON"
+		"val"			"url https://wiki.tf2sm.info"
+	}
 	"category2"
 	{
-		"Community Help/Work Used"
-		{ CATEGORY }
-	}	
+		"label"		"Community Help / Work Used"
+		"type"		"CATEGORY"
+	}
 	"credit2_1"
 	{
-		"BetaM - Custom Items, Credits menu, Misc. Fixes"
-		"https://www.youtube.com/BetaM"
-		{ BOOL }
-		{ "1" }
-	}	
+		"label"		"BetaM - Custom Items, made Version 1 of this Credits menu, and other Misc. Fixes"
+		"tooltip"	"Click to open profile (https://youtube.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://youtube.com/BetaM"
+	}
 	"credit2_2"
 	{
-		"CTrigger_Hurt - MVM Robots (Viewmodels, Anim and Texture fixes)"
-		"https://steamcommunity.com/profiles/76561198036209556"
-		{ BOOL }
-		{ "1" }
-	}	
+		"label"		"CTrigger_Hurt - MVM Robots (Viewmodels, Anim and Texture fixes)"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/profiles/76561198036209556"
+	}
 	"credit2_3"
 	{
-		"Gidi30 - 3D Custommodel portrait, Prop_vehicle fix"
-		"https://steamcommunity.com/profiles/76561198363234129"
-		{ BOOL }
-		{ "1" }
-	}	
+		"label"		"Gidi30 - 3D Custommodel portrait, Prop_vehicle fix, and helping us with C++ occasionally"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/profiles/76561198363234129"
+	}
 	"credit2_4"
 	{
-		"CopperPixel - Infinite Ammo"
-		{ BOOL }
-		{ "1" }
+		"label"		"CopperPixel - Infinite Ammo"
+		"tooltip"	"Click to open profile (https://github.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://github.com/copperpixel"
 	}
 	"credit2_5"
 	{
-		"Rabscootle - MvM Responses Fixes/Restorations"
-		{ BOOL }
-		{ "1" }
+		"label"		"Rabscootle - MvM Responses Fixes/Restorations"
+		"tooltip"	"Click to open profile (https://github.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://github.com/rabscootle"
 	}
 	"credit2_6"
 	{
-		"k-vog - Class select anim bug"
-		{ BOOL }
-		{ "1" }
+		"label"		"kvog-git - Class select anim bug"
+		"tooltip"	"Click to open profile (https://github.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://github.com/kvog-git"
+	}
+	"category3"
+	{
+		"label"		"OFFSHORE stuff"
+		"type"		"CATEGORY"
+	}
+	"credit3_1"
+	{
+		"label"		"Haau - The Hell Beneath Stickybomb launcher"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/id/Haaau"
+	}
+	"credit3_2"
+	{
+		"label"		"Altranade - The Holy Merlin"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/id/megaglitch016"
+	}
+	"credit3_3"
+	{
+		"label"		"TheHypedScoot - Scout Sandkick Taunt"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/profiles/76561198138587661"
+	}
+	"credit3_4"
+	{
+		"label"		"Dansky - Crate and key models"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/id/dansky_lab"
 	}
 	"category4"
 	{
-		"UPDATE: OFFSHORE"
-		{ CATEGORY }
-	}	
+		"label"		"Workshop & Community Items Used"
+		"type"		"CATEGORY"
+	}
 	"credit4_1"
 	{
-		"Haau - The Hell Beneath Stickybomb launcher"
-		{ BOOL }
-		{ "1" }
+		"label"		"Evan - Soviet Unit"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/id/stumpypenguin"
 	}
 	"credit4_2"
 	{
-		"Altranade - The Holy Merlin"
-		{ BOOL }
-		{ "1" }
+		"label"		"NeoDos - Mini-Dispenser, and  the Handy Partner"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/) (may you rest in peace)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/id/neodos"
 	}
 	"credit4_3"
 	{
-		"TheHypedScoot - Scout Sandkick taunt"
-		{ BOOL }
-		{ "1" }
+		"label"		"MOTS0 - Baleful Beacon, Airborne Arsonist Edits"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/id/Mr_Sol"
 	}
 	"credit4_4"
 	{
-		"Dansky - Crate and key models"
-		{ BOOL }
-		{ "1" }
+		"label"		"NeoDement - Airborne Arsonist Edits"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/id/neodement"
+	}
+	"credit4_5"
+	{
+		"label"		"Hactica - Community Animation Fixes"
+		"tooltip"	"Click to open profile (https://youtube.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://www.youtube.com/@Flpstrike"
+	}
+	"credit4_6"
+	{
+		"label"		"995qa - Fixed the main menu being broken on resolutions other than 16:9"
+		"tooltip"	"Click to open profile (https://github.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://github.com/995qa"
 	}
 	"category5"
 	{
-		"WORKSHOP COMMUNITY ITEMS USED"
-		{ CATEGORY }
-	}	
+		"label"		"Warpaints"
+		"type"		"CATEGORY"
+	}
 	"credit5_1"
 	{
-		"Evan - Soviet Unit"
-		{ BOOL }
-		{ "1" }
-	}
-	"credit5_2"
-	{
-		"NeoDos - Mini-Dispenser, Handy Partner"
-		{ BOOL }
-		{ "1" }
-	}
-	"credit5_3"
-	{
-		"MOTS0 - Baleful Beacon, Airborne Arsonist Edits"
-		{ BOOL }
-		{ "1" }
-	}
-	"credit5_4"
-	{
-		"NeoDement - Airborne Arsonist Edits"
-		{ BOOL }
-		{ "1" }
-	}
-	"credit5_5"
-	{
-		"Hactica - Community Animation Fixes"
-		{ BOOL }
-		{ "1" }
-	}
-	"category6"
-	{
-		"WARPAINTS"
-		{ CATEGORY }
-	}	
-	"credit6_1"
-	{
-		"Purple Range MK2 - Meatwad"
-		{ BOOL }
-		{ "1" }
-	}
-	"category7"
-	{
-		"HUD FIXES"
-		{ CATEGORY }
-	}	
-	"credit7_1"
-	{
-		"995qa - Fixed the mainmenu being broken on resolutions other than 16:9"
-		{ BOOL }
-		{ "1" }
+		"label"		"Meatwad - Purple Range MK2 Warpaint"
+		"tooltip"	"Click to open profile (https://steamcommunity.com/)"
+		"type"		"BUTTON"
+		"val"			"url https://steamcommunity.com/id/MeatwadMeatwad"
 	}
 }
